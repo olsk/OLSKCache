@@ -4,21 +4,21 @@
  * MIT Licensed
  */
 
-var filesystemLibrary = require('../ROCOFilesystem/main');
+var filesystemLibrary = require('../OLSKFilesystem/main');
 
 var fsPackage = require('fs');
 var pathPackage = require('path');
 var mkdirpPackage = require('mkdirp');
 
-//_ ROCOCacheValueWithCallbackFunctionCacheKeyAndCacheObject
+//_ OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject
 
-exports.ROCOCacheValueWithCallbackFunctionCacheKeyAndCacheObject = function(callback, key, cacheObject) {
+exports.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject = function(callback, key, cacheObject) {
 	if (typeof callback !== 'function') {
-		throw new Error('ROCOErrorInputInvalid');
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
 	if (typeof key !== 'string') {
-		throw new Error('ROCOErrorInputInvalid');
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
 	if (typeof cacheObject !== 'object' || cacheObject === null) {
@@ -32,54 +32,54 @@ exports.ROCOCacheValueWithCallbackFunctionCacheKeyAndCacheObject = function(call
 	return cacheObject[key];
 };
 
-//_ ROCOCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory
+//_ OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory
 
-exports.ROCOCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = function(inputData, cacheKey, rootDirectory) {
+exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = function(inputData, cacheKey, rootDirectory) {
 	if (typeof inputData !== 'object' || inputData === null) {
-		throw new Error('ROCOErrorInputInvalid');
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
 	if (typeof cacheKey !== 'string') {
-		throw new Error('ROCOErrorInputInvalid');
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!filesystemLibrary.ROCOFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
-		throw new Error('ROCOErrorInputInvalid');
+	if (!filesystemLibrary.OLSKFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	var cacheDirectory = pathPackage.join(rootDirectory, filesystemLibrary.ROCOFilesystemCacheDirectoryName());
+	var cacheDirectory = pathPackage.join(rootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName());
 
 	if (!fsPackage.existsSync(cacheDirectory)) {
 		mkdirpPackage.sync(cacheDirectory);
 	}
 
-	fsPackage.writeFileSync(pathPackage.join(cacheDirectory, [cacheKey, '.', filesystemLibrary.ROCOFilesystemSharedFileExtensionJSON()].join('')), JSON.stringify(inputData, null, '\t'));
+	fsPackage.writeFileSync(pathPackage.join(cacheDirectory, [cacheKey, '.', filesystemLibrary.OLSKFilesystemSharedFileExtensionJSON()].join('')), JSON.stringify(inputData, null, '\t'));
 
 	return null;
 };
 
-//_ ROCOCacheReadCacheObjectFileWithCacheKeyAndRootDirectory
+//_ OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory
 
-exports.ROCOCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(inputData, rootDirectory) {
+exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(inputData, rootDirectory) {
 	if (typeof inputData !== 'string') {
-		throw new Error('ROCOErrorInputInvalid');
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!filesystemLibrary.ROCOFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
-		throw new Error('ROCOErrorInputInvalid');
+	if (!filesystemLibrary.OLSKFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	var cacheDirectory = pathPackage.join(rootDirectory, filesystemLibrary.ROCOFilesystemCacheDirectoryName());
+	var cacheDirectory = pathPackage.join(rootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName());
 
 	if (!fsPackage.existsSync(cacheDirectory)) {
 		return null;
 	}
 
-	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [inputData, '.', filesystemLibrary.ROCOFilesystemSharedFileExtensionJSON()].join(''));
+	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [inputData, '.', filesystemLibrary.OLSKFilesystemSharedFileExtensionJSON()].join(''));
 
 	if (!fsPackage.existsSync(cacheObjectFileFullPath)) {
 		return null;
 	}
 
-	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, filesystemLibrary.ROCOFilesystemDefaultTextEncoding()));
+	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, filesystemLibrary.OLSKFilesystemDefaultTextEncoding()));
 };
