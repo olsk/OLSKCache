@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 
-var filesystemLibrary = require('../OLSKFilesystem/main');
+var filesystemLibrary = require('OLSKFilesystem');
 
 var fsPackage = require('fs');
 var pathPackage = require('path');

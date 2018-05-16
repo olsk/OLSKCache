@@ -7,14 +7,14 @@
 var assert = require('assert');
 
 var cacheLibrary = require('./main');
-var filesystemLibrary = require('../OLSKFilesystem/main');
+var filesystemLibrary = require('OLSKFilesystem');
 
 var fsPackage = require('fs');
 var pathPackage = require('path');
 var mkdirpPackage = require('mkdirp');
 
 var testRootDirectory = pathPackage.join(
-	filesystemLibrary._OLSKFilesystemAbsolutePathWorkspaceTestingDirectory(),
+	filesystemLibrary.OLSKFilesystemWorkspaceTestingDirectoryName(),
 	filesystemLibrary.OLSKFilesystemWorkspaceTestingDirectorySubfolderNameFor('alpha.cache'));
 
 var OLSKTestingCacheObjectValid = function() {
