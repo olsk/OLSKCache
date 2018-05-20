@@ -96,7 +96,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 		mkdirpPackage.sync(testRootDirectory);
 		assert.strictEqual(cacheLibrary.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(cacheObject, 'alpha', testRootDirectory), null);
 
-		var patternFileFullPath = pathPackage.join(testRootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + filesystemLibrary.OLSKFilesystemSharedFileExtensionJSON());
+		var patternFileFullPath = pathPackage.join(testRootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + cacheLibrary.OLSKCacheFileExtensionJSON());
 		assert.strictEqual(fsPackage.existsSync(patternFileFullPath), true);
 		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, filesystemLibrary.OLSKFilesystemDefaultTextEncoding()), JSON.stringify(cacheObject, null, '\t'));
 	});

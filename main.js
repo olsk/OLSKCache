@@ -53,7 +53,7 @@ exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = f
 		mkdirpPackage.sync(cacheDirectory);
 	}
 
-	fsPackage.writeFileSync(pathPackage.join(cacheDirectory, [cacheKey, '.', filesystemLibrary.OLSKFilesystemSharedFileExtensionJSON()].join('')), JSON.stringify(inputData, null, '\t'));
+	fsPackage.writeFileSync(pathPackage.join(cacheDirectory, [cacheKey, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(inputData, null, '\t'));
 
 	return null;
 };
@@ -75,11 +75,17 @@ exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(inpu
 		return null;
 	}
 
-	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [inputData, '.', filesystemLibrary.OLSKFilesystemSharedFileExtensionJSON()].join(''));
+	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [inputData, '.', exports.OLSKCacheFileExtensionJSON()].join(''));
 
 	if (!fsPackage.existsSync(cacheObjectFileFullPath)) {
 		return null;
 	}
 
 	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, filesystemLibrary.OLSKFilesystemDefaultTextEncoding()));
+};
+
+//_ OLSKCacheFileExtensionJSON
+
+exports.OLSKCacheFileExtensionJSON = function() {
+	return 'json';
 };
