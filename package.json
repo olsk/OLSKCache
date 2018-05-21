@@ -4,6 +4,6 @@
   "private": true,
   "main": "main.js",
   "devDependencies": {
-    "OLSKFilesystem": "git@github.com:olsk/OLSKFilesystem.git"
+    "OLSKFilesystem": "olsk/OLSKFilesystem"
   }
 }
