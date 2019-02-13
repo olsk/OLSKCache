@@ -9,8 +9,8 @@ const assert = require('assert');
 const mainModule = require('./main');
 const OLSKFilesystem = require('OLSKFilesystem');
 
-const fsPackage = require('fs');
 const pathPackage = require('path');
+const fsPackage = require('fs');
 
 const testRootDirectory = pathPackage.join(
 	OLSKFilesystem.OLSKFilesystemWorkspaceTestingDirectoryName(),
@@ -65,7 +65,7 @@ describe('OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject', function te
 describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory', function testOLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		if (fsPackage.existsSync(testRootDirectory)) {
+		if (OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(testRootDirectory)) {
 			OLSKFilesystem.OLSKFilesystemHelpDeleteDirectoryRecursive(testRootDirectory);
 		}
 	});
@@ -96,7 +96,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 		assert.strictEqual(mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(cacheObject, 'alpha', testRootDirectory), null);
 
 		var patternFileFullPath = pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
-		assert.strictEqual(fsPackage.existsSync(patternFileFullPath), true);
+		assert.strictEqual(OLSKFilesystem.OLSKFilesystemInputDataIsRealFilePath(patternFileFullPath), true);
 		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKFilesystem.OLSKFilesystemDefaultTextEncoding()), JSON.stringify(cacheObject, null, '\t'));
 	});
 
@@ -105,7 +105,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function testOLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		if (fsPackage.existsSync(testRootDirectory)) {
+		if (OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(testRootDirectory)) {
 			OLSKFilesystem.OLSKFilesystemHelpDeleteDirectoryRecursive(testRootDirectory);
 		}
 	});
