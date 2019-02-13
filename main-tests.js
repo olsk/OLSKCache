@@ -7,15 +7,15 @@
 var assert = require('assert');
 
 var cacheLibrary = require('./main');
-var filesystemLibrary = require('OLSKFilesystem');
+const OLSKFilesystem = require('OLSKFilesystem');
 
 var fsPackage = require('fs');
 var pathPackage = require('path');
 var mkdirpPackage = require('mkdirp');
 
 var testRootDirectory = pathPackage.join(
-	filesystemLibrary.OLSKFilesystemWorkspaceTestingDirectoryName(),
-	filesystemLibrary.OLSKFilesystemWorkspaceTestingDirectorySubfolderNameFor('alpha.cache'));
+	OLSKFilesystem.OLSKFilesystemWorkspaceTestingDirectoryName(),
+	OLSKFilesystem.OLSKFilesystemWorkspaceTestingDirectorySubfolderNameFor('alpha.cache'));
 
 var OLSKTestingCacheObjectValid = function() {
 	return {
@@ -67,7 +67,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 
 	beforeEach(function() {
 		if (fsPackage.existsSync(testRootDirectory)) {
-			filesystemLibrary.OLSKFilesystemHelpDeleteDirectoryRecursive(testRootDirectory);
+			OLSKFilesystem.OLSKFilesystemHelpDeleteDirectoryRecursive(testRootDirectory);
 		}
 	});
 
@@ -96,9 +96,9 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 		mkdirpPackage.sync(testRootDirectory);
 		assert.strictEqual(cacheLibrary.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(cacheObject, 'alpha', testRootDirectory), null);
 
-		var patternFileFullPath = pathPackage.join(testRootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + cacheLibrary.OLSKCacheFileExtensionJSON());
+		var patternFileFullPath = pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + cacheLibrary.OLSKCacheFileExtensionJSON());
 		assert.strictEqual(fsPackage.existsSync(patternFileFullPath), true);
-		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, filesystemLibrary.OLSKFilesystemDefaultTextEncoding()), JSON.stringify(cacheObject, null, '\t'));
+		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKFilesystem.OLSKFilesystemDefaultTextEncoding()), JSON.stringify(cacheObject, null, '\t'));
 	});
 
 });
@@ -107,13 +107,13 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 
 	beforeEach(function() {
 		if (fsPackage.existsSync(testRootDirectory)) {
-			filesystemLibrary.OLSKFilesystemHelpDeleteDirectoryRecursive(testRootDirectory);
+			OLSKFilesystem.OLSKFilesystemHelpDeleteDirectoryRecursive(testRootDirectory);
 		}
 	});
 
 	it('throws error if param1 not string', function() {
 		assert.throws(function() {
-			mkdirpPackage.sync(pathPackage.join(testRootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName()));
+			mkdirpPackage.sync(pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
 			cacheLibrary.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory(null, testRootDirectory);
 		}, /OLSKErrorInputInvalid/);
 	});
@@ -130,7 +130,7 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 	});
 
 	it('returns null if cacheKey does not exist', function() {
-		mkdirpPackage.sync(pathPackage.join(testRootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName()));
+		mkdirpPackage.sync(pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
 		assert.strictEqual(cacheLibrary.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', testRootDirectory), null);
 	});
 
