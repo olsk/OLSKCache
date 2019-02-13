@@ -4,11 +4,10 @@
  * MIT Licensed
  */
 
-var filesystemLibrary = require('OLSKFilesystem');
+const OLSKFilesystem = require('OLSKFilesystem');
 
-var fsPackage = require('fs');
-var pathPackage = require('path');
-var mkdirpPackage = require('mkdirp');
+const fsPackage = require('fs');
+const pathPackage = require('path');
 
 //_ OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject
 
@@ -34,54 +33,48 @@ exports.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject = function(call
 
 //_ OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory
 
-exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = function(inputData, cacheKey, rootDirectory) {
-	if (typeof inputData !== 'object' || inputData === null) {
+exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = function(param1, param2, param3) {
+	if (typeof param1 !== 'object' || param1 === null) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (typeof cacheKey !== 'string') {
+	if (typeof param2 !== 'string') {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!filesystemLibrary.OLSKFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
+	if (!OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(param3)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	var cacheDirectory = pathPackage.join(rootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName());
-
-	if (!fsPackage.existsSync(cacheDirectory)) {
-		mkdirpPackage.sync(cacheDirectory);
-	}
-
-	fsPackage.writeFileSync(pathPackage.join(cacheDirectory, [cacheKey, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(inputData, null, '\t'));
+	fsPackage.writeFileSync(pathPackage.join(OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(pathPackage.join(param3, OLSKFilesystem.OLSKFilesystemCacheDirectoryName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 	return null;
 };
 
 //_ OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory
 
-exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(inputData, rootDirectory) {
-	if (typeof inputData !== 'string') {
+exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(param1, rootDirectory) {
+	if (typeof param1 !== 'string') {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!filesystemLibrary.OLSKFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
+	if (!OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	var cacheDirectory = pathPackage.join(rootDirectory, filesystemLibrary.OLSKFilesystemCacheDirectoryName());
+	var cacheDirectory = pathPackage.join(rootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName());
 
 	if (!fsPackage.existsSync(cacheDirectory)) {
 		return null;
 	}
 
-	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [inputData, '.', exports.OLSKCacheFileExtensionJSON()].join(''));
+	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''));
 
 	if (!fsPackage.existsSync(cacheObjectFileFullPath)) {
 		return null;
 	}
 
-	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, filesystemLibrary.OLSKFilesystemDefaultTextEncoding()));
+	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, OLSKFilesystem.OLSKFilesystemDefaultTextEncoding()));
 };
 
 //_ OLSKCacheFileExtensionJSON
