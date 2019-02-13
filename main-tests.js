@@ -9,7 +9,6 @@ const assert = require('assert');
 const mainModule = require('./main');
 const OLSKFilesystem = require('OLSKFilesystem');
 
-var mkdirpPackage = require('mkdirp');
 const fsPackage = require('fs');
 const pathPackage = require('path');
 
@@ -73,14 +72,14 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 
 	it('throws error if param1 not object', function() {
 		assert.throws(function() {
-			mkdirpPackage.sync(testRootDirectory);
+			OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(testRootDirectory);
 			mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(null, 'alpha', testRootDirectory);
 		}, /OLSKErrorInputInvalid/);
 	});
 
 	it('throws error if param2 not string', function() {
 		assert.throws(function() {
-			mkdirpPackage.sync(testRootDirectory);
+			OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(testRootDirectory);
 			mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(OLSKTestingCacheObjectValid(), null, testRootDirectory);
 		}, /OLSKErrorInputInvalid/);
 	});
@@ -93,7 +92,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 
 	it('returns null and writes data for json', function() {
 		var cacheObject = OLSKTestingCacheObjectValid();
-		mkdirpPackage.sync(testRootDirectory);
+		OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(testRootDirectory);
 		assert.strictEqual(mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(cacheObject, 'alpha', testRootDirectory), null);
 
 		var patternFileFullPath = pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
@@ -113,7 +112,7 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 
 	it('throws error if param1 not string', function() {
 		assert.throws(function() {
-			mkdirpPackage.sync(pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
+			OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
 			mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory(null, testRootDirectory);
 		}, /OLSKErrorInputInvalid/);
 	});
@@ -125,17 +124,17 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 	});
 
 	it('returns null if cache directory does not exist', function() {
-		mkdirpPackage.sync(testRootDirectory);
+		OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(testRootDirectory);
 		assert.strictEqual(mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', testRootDirectory), null);
 	});
 
 	it('returns null if cacheKey does not exist', function() {
-		mkdirpPackage.sync(pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
+		OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(pathPackage.join(testRootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
 		assert.strictEqual(mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', testRootDirectory), null);
 	});
 
 	it('returns cacheObject', function() {
-		mkdirpPackage.sync(testRootDirectory);
+		OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(testRootDirectory);
 
 		var cacheObject = OLSKTestingCacheObjectValid();
 		assert.strictEqual(mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(cacheObject, 'alpha', testRootDirectory), null);
