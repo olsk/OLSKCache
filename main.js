@@ -46,7 +46,7 @@ exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = f
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	fsPackage.writeFileSync(pathPackage.join(OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheDirectoryName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+	fsPackage.writeFileSync(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheDirectoryName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 	return null;
 };
