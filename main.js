@@ -42,7 +42,7 @@ exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = f
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(param3)) {
+	if (!OLSKDisk.OLSKDiskIsRealFolderPath(param3)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
@@ -58,7 +58,7 @@ exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(para
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(rootDirectory)) {
+	if (!OLSKDisk.OLSKDiskIsRealFolderPath(rootDirectory)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
