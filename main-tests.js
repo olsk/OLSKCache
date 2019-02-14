@@ -66,7 +66,7 @@ describe('OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject', function te
 describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory', function testOLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
+		OLSKDisk.OLSKDiskDeleteFolder(kTesting.StubRootDirectory());
 	});
 
 	it('throws error if param1 not object', function() {
@@ -104,7 +104,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function testOLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
+		OLSKDisk.OLSKDiskDeleteFolder(kTesting.StubRootDirectory());
 	});
 
 	it('throws error if param1 not string', function() {
