@@ -8,13 +8,13 @@ const assert = require('assert');
 
 const mainModule = require('./main');
 
-const OLSKFilesystem = require('OLSKFilesystem');
+const OLSKDisk = require('OLSKDisk');
 const pathPackage = require('path');
 const fsPackage = require('fs');
 
 const kTesting = {
 	StubRootDirectory: function () {
-		return pathPackage.join(OLSKFilesystem.OLSKFilesystemWorkspaceTestingDirectoryName(),OLSKFilesystem.OLSKFilesystemWorkspaceTestingDirectorySubfolderNameFor('alpha.cache'));
+		return pathPackage.join(OLSKDisk.OLSKDiskWorkspaceTestingDirectoryName(),OLSKDisk.OLSKDiskWorkspaceTestingDirectorySubfolderNameFor('alpha.cache'));
 	},
 	StubCacheObjectValid: function () {
 		return {
@@ -66,20 +66,20 @@ describe('OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject', function te
 describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory', function testOLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		if (OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(kTesting.StubRootDirectory())) {
-			OLSKFilesystem.OLSKFilesystemHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
+		if (OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(kTesting.StubRootDirectory())) {
+			OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
 		}
 	});
 
 	it('throws error if param1 not object', function() {
 		assert.throws(function() {
-			mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(null, 'alpha', OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(null, 'alpha', OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()));
 		}, /OLSKErrorInputInvalid/);
 	});
 
 	it('throws error if param2 not string', function() {
 		assert.throws(function() {
-			mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), null, OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()));
 		}, /OLSKErrorInputInvalid/);
 	});
 
@@ -90,15 +90,15 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 	});
 
 	it('returns param3', function() {
-		assert.strictEqual(mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory())), null);
+		assert.strictEqual(mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory())), null);
 	});
 
 	it('returns null and writes data for json', function() {
-		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()));
+		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()));
 
-		let patternFileFullPath = pathPackage.join(kTesting.StubRootDirectory(), OLSKFilesystem.OLSKFilesystemCacheDirectoryName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
-		assert.strictEqual(OLSKFilesystem.OLSKFilesystemInputDataIsRealFilePath(patternFileFullPath), true);
-		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKFilesystem.OLSKFilesystemDefaultTextEncoding()), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+		let patternFileFullPath = pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheDirectoryName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
+		assert.strictEqual(OLSKDisk.OLSKDiskInputDataIsRealFilePath(patternFileFullPath), true);
+		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKDisk.OLSKDiskDefaultTextEncoding()), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
 });
@@ -106,14 +106,14 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function testOLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		if (OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(kTesting.StubRootDirectory())) {
-			OLSKFilesystem.OLSKFilesystemHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
+		if (OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(kTesting.StubRootDirectory())) {
+			OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
 		}
 	});
 
 	it('throws error if param1 not string', function() {
 		assert.throws(function() {
-			OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(pathPackage.join(kTesting.StubRootDirectory(), OLSKFilesystem.OLSKFilesystemCacheDirectoryName()));
+			OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheDirectoryName()));
 			mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory(null, kTesting.StubRootDirectory());
 		}, /OLSKErrorInputInvalid/);
 	});
@@ -125,11 +125,11 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 	});
 
 	it('returns null', function() {
-		assert.strictEqual(mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory())), null);
+		assert.strictEqual(mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory())), null);
 	});
 
 	it('returns cacheObject if exists', function() {
-		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()))
+		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(kTesting.StubRootDirectory()))
 		assert.deepEqual(mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
 	});
 

@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 
-const OLSKFilesystem = require('OLSKFilesystem');
+const OLSKDisk = require('OLSKDisk');
 
 const fsPackage = require('fs');
 const pathPackage = require('path');
@@ -42,11 +42,11 @@ exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = f
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(param3)) {
+	if (!OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(param3)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	fsPackage.writeFileSync(pathPackage.join(OLSKFilesystem.OLSKFilesystemHelpCreateDirectoryIfDoesNotExist(pathPackage.join(param3, OLSKFilesystem.OLSKFilesystemCacheDirectoryName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+	fsPackage.writeFileSync(pathPackage.join(OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheDirectoryName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 	return null;
 };
@@ -58,11 +58,11 @@ exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(para
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!OLSKFilesystem.OLSKFilesystemInputDataIsRealDirectoryPath(rootDirectory)) {
+	if (!OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(rootDirectory)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	var cacheDirectory = pathPackage.join(rootDirectory, OLSKFilesystem.OLSKFilesystemCacheDirectoryName());
+	var cacheDirectory = pathPackage.join(rootDirectory, OLSKDisk.OLSKDiskCacheDirectoryName());
 
 	if (!fsPackage.existsSync(cacheDirectory)) {
 		return null;
@@ -74,7 +74,7 @@ exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(para
 		return null;
 	}
 
-	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, OLSKFilesystem.OLSKFilesystemDefaultTextEncoding()));
+	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, OLSKDisk.OLSKDiskDefaultTextEncoding()));
 };
 
 //_ OLSKCacheFileExtensionJSON

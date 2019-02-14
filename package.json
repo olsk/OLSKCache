@@ -4,6 +4,6 @@
   "private": true,
   "main": "main.js",
   "devDependencies": {
-    "OLSKFilesystem": "olsk/OLSKFilesystem"
+    "OLSKDisk": "olsk/OLSKDisk"
   }
 }
