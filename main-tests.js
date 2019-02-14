@@ -66,9 +66,7 @@ describe('OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject', function te
 describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory', function testOLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		if (OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(kTesting.StubRootDirectory())) {
-			OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
-		}
+		OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
 	});
 
 	it('throws error if param1 not object', function() {
@@ -106,14 +104,11 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function testOLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
-		if (OLSKDisk.OLSKDiskInputDataIsRealDirectoryPath(kTesting.StubRootDirectory())) {
-			OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
-		}
+		OLSKDisk.OLSKDiskHelpDeleteDirectoryRecursive(kTesting.StubRootDirectory());
 	});
 
 	it('throws error if param1 not string', function() {
 		assert.throws(function() {
-			OLSKDisk.OLSKDiskHelpCreateDirectoryIfDoesNotExist(pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheDirectoryName()));
 			mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory(null, kTesting.StubRootDirectory());
 		}, /OLSKErrorInputInvalid/);
 	});
