@@ -14,7 +14,7 @@ const fsPackage = require('fs');
 
 const kTesting = {
 	StubRootDirectory: function () {
-		return pathPackage.join(OLSKDisk.OLSKDiskWorkspaceTestingDirectoryName(),OLSKDisk.OLSKDiskWorkspaceTestingDirectorySubfolderNameFor('alpha.cache'));
+		return pathPackage.join(OLSKDisk.OLSKDiskWorkspaceTestingFolderName(),OLSKDisk.OLSKDiskWorkspaceTestingFolderSubfolderNameFor('alpha.cache'));
 	},
 	StubCacheObjectValid: function () {
 		return {
@@ -94,7 +94,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 	it('returns null and writes data for json', function() {
 		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
 
-		let patternFileFullPath = pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheDirectoryName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
+		let patternFileFullPath = pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheFolderName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
 		assert.strictEqual(OLSKDisk.OLSKDiskIsRealFilePath(patternFileFullPath), true);
 		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKDisk.OLSKDiskDefaultTextEncoding()), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
