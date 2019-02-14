@@ -95,7 +95,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
 
 		let patternFileFullPath = pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheDirectoryName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
-		assert.strictEqual(OLSKDisk.OLSKDiskInputDataIsRealFilePath(patternFileFullPath), true);
+		assert.strictEqual(OLSKDisk.OLSKDiskIsRealFilePath(patternFileFullPath), true);
 		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKDisk.OLSKDiskDefaultTextEncoding()), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
