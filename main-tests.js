@@ -10,7 +10,6 @@ const mainModule = require('./main');
 
 const OLSKDisk = require('OLSKDisk');
 const pathPackage = require('path');
-const fsPackage = require('fs');
 
 const kTesting = {
 	StubRootDirectory: function () {
@@ -96,7 +95,7 @@ describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory',
 
 		let patternFileFullPath = pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheFolderName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON());
 		assert.strictEqual(OLSKDisk.OLSKDiskIsRealFilePath(patternFileFullPath), true);
-		assert.strictEqual(fsPackage.readFileSync(patternFileFullPath, OLSKDisk.OLSKDiskDefaultTextEncoding()), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+		assert.strictEqual(OLSKDisk.OLSKDiskReadFile(patternFileFullPath), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
 });

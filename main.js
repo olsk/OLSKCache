@@ -6,7 +6,6 @@
 
 const OLSKDisk = require('OLSKDisk');
 
-const fsPackage = require('fs');
 const pathPackage = require('path');
 
 //_ OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject
@@ -46,35 +45,27 @@ exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = f
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	fsPackage.writeFileSync(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+	OLSKDisk.OLSKDiskWriteFile(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 	return null;
 };
 
 //_ OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory
 
-exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(param1, rootDirectory) {
+exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(param1, param2) {
 	if (typeof param1 !== 'string') {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	if (!OLSKDisk.OLSKDiskIsRealFolderPath(rootDirectory)) {
+	if (!OLSKDisk.OLSKDiskIsRealFolderPath(param2)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
-	var cacheDirectory = pathPackage.join(rootDirectory, OLSKDisk.OLSKDiskCacheFolderName());
-
-	if (!fsPackage.existsSync(cacheDirectory)) {
+	try {
+		return JSON.parse(OLSKDisk.OLSKDiskReadFile(pathPackage.join(param2, OLSKDisk.OLSKDiskCacheFolderName(), [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
+	} catch(e) {
 		return null;
 	}
-
-	var cacheObjectFileFullPath = pathPackage.join(cacheDirectory, [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''));
-
-	if (!fsPackage.existsSync(cacheObjectFileFullPath)) {
-		return null;
-	}
-
-	return JSON.parse(fsPackage.readFileSync(cacheObjectFileFullPath, OLSKDisk.OLSKDiskDefaultTextEncoding()));
 };
 
 //_ OLSKCacheFileExtensionJSON
