@@ -71,3 +71,23 @@ exports.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory = function(para
 exports.OLSKCacheFileExtensionJSON = function() {
 	return 'json';
 };
+
+exports.OLSKCacheResultFromObject = function (param1, param2, param3) {
+	if (typeof param1 !== 'object' || param1 === null) {
+		return Promise.reject('RCSErrorInputInvalid');
+	}
+
+	if (typeof param2 !== 'string') {
+		return Promise.reject('RCSErrorInputInvalid');
+	};
+
+	if (typeof param3 !== 'function') {
+		return Promise.reject('RCSErrorInputInvalid');
+	};
+
+	if (param1[param2]) {
+		return Promise.resolve(param1[param2]);
+	};
+
+	return Promise.resolve(param3());
+};

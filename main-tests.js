@@ -121,6 +121,34 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 	it('returns cacheObject if exists', function() {
 		mainModule.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))
 		assert.deepEqual(mainModule.OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory('alpha', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
+
+});
+
+describe('OLSKCacheResultFromObject', function testOLSKCacheResultFromObject() {
+
+	it('rejects if param1 not object', function() {
+		return rejects(mainModule.OLSKCacheResultFromObject(null, 'alfa', function () {}));
+	});
+	
+	it('rejects if param2 not string', function() {
+		return rejects(mainModule.OLSKCacheResultFromObject({}, null, function () {}));
+	});
+	
+	it('rejects if param3 not function', function() {
+		return rejects(mainModule.OLSKCacheResultFromObject({}, 'alfa', null));
+	});
+	
+	it('returns value if exists', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFromObject({
+			alfa: 'bravo',
+		}, 'alfa', function () {}), 'bravo');
+	});
+	
+	it('runs callback, sets value, and returns result', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFromObject({
+		}, 'alfa', async function () {
+			return Promise.resolve('bravo')
+		}), 'bravo');
 	});
 
 });
