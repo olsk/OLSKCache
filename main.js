@@ -8,28 +8,6 @@ const OLSKDisk = require('OLSKDisk');
 
 const pathPackage = require('path');
 
-//_ OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject
-
-exports.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject = function(callback, key, cacheObject) {
-	if (typeof callback !== 'function') {
-		throw new Error('OLSKErrorInputInvalid');
-	}
-
-	if (typeof key !== 'string') {
-		throw new Error('OLSKErrorInputInvalid');
-	}
-
-	if (typeof cacheObject !== 'object' || cacheObject === null) {
-		return callback();
-	}
-
-	if (cacheObject[key] === undefined) {
-		cacheObject[key] = callback();
-	}
-
-	return cacheObject[key];
-};
-
 //_ OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory
 
 exports.OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory = function(param1, param2, param3) {

@@ -17,46 +17,6 @@ const kTesting = {
 	},
 };
 
-describe('OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject', function testOLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject() {
-
-	it('throws if param1 not function', function() {
-		throws(function() {
-			mainModule.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject(null, 'alpha', {});
-		}, /OLSKErrorInputInvalid/);
-	});
-
-	it('throws if param2 not string', function() {
-		throws(function() {
-			mainModule.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject(function() {}, null, {});
-		}, /OLSKErrorInputInvalid/);
-	});
-
-	it('returns callback result if param3 not object', function() {
-		deepEqual(mainModule.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject(function() {
-			return 'zulu';
-		}, 'alpha', 1), 'zulu');
-	});
-
-	it('sets cacheObject[key] to callback result', function() {
-		let item = {};
-		mainModule.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject(function() {
-			return 'zulu';
-		}, 'alpha', item);
-		deepEqual(item['alpha'], 'zulu');
-	});
-
-	it('returns cached result if key exists', function() {
-		let item = {};
-		mainModule.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject(function() {
-			return 'zulu';
-		}, 'alpha', item);
-		deepEqual(mainModule.OLSKCacheValueWithCallbackFunctionCacheKeyAndCacheObject(function() {
-			return 'bravo';
-		}, 'alpha', item), 'zulu');
-	});
-
-});
-
 describe('OLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory', function testOLSKCacheWriteCacheObjectFileWithCacheObjectCacheKeyAndRootDirectory() {
 
 	beforeEach(function() {
