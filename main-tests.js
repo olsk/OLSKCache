@@ -80,28 +80,28 @@ describe('OLSKCacheReadCacheObjectFileWithCacheKeyAndRootDirectory', function te
 
 });
 
-describe('OLSKCacheResultFromObject', function testOLSKCacheResultFromObject() {
+describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 
 	it('rejects if param1 not object', function() {
-		return rejects(mainModule.OLSKCacheResultFromObject(null, 'alfa', function () {}));
+		return rejects(mainModule.OLSKCacheResultFetchOnce(null, 'alfa', function () {}));
 	});
 	
 	it('rejects if param2 not string', function() {
-		return rejects(mainModule.OLSKCacheResultFromObject({}, null, function () {}));
+		return rejects(mainModule.OLSKCacheResultFetchOnce({}, null, function () {}));
 	});
 	
 	it('rejects if param3 not function', function() {
-		return rejects(mainModule.OLSKCacheResultFromObject({}, 'alfa', null));
+		return rejects(mainModule.OLSKCacheResultFetchOnce({}, 'alfa', null));
 	});
 	
 	it('returns value if exists', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFromObject({
+		deepEqual(await mainModule.OLSKCacheResultFetchOnce({
 			alfa: 'bravo',
 		}, 'alfa', function () {}), 'bravo');
 	});
 	
 	it('runs callback, sets value, and returns result', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFromObject({
+		deepEqual(await mainModule.OLSKCacheResultFetchOnce({
 		}, 'alfa', async function () {
 			return Promise.resolve('bravo')
 		}), 'bravo');

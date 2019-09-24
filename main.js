@@ -50,7 +50,7 @@ exports.OLSKCacheFileExtensionJSON = function() {
 	return 'json';
 };
 
-exports.OLSKCacheResultFromObject = function (param1, param2, param3) {
+exports.OLSKCacheResultFetchOnce = function (param1, param2, param3) {
 	if (typeof param1 !== 'object' || param1 === null) {
 		return Promise.reject('RCSErrorInputInvalid');
 	}
