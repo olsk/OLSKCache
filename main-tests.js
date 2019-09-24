@@ -101,8 +101,7 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 	});
 	
 	it('runs callback, sets value, and returns result', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchOnce({
-		}, 'alfa', async function () {
+		deepEqual(await mainModule.OLSKCacheResultFetchOnce({}, 'alfa', function () {
 			return Promise.resolve('bravo')
 		}), 'bravo');
 	});

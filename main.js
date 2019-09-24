@@ -52,15 +52,15 @@ exports.OLSKCacheFileExtensionJSON = function() {
 
 exports.OLSKCacheResultFetchOnce = function (param1, param2, param3) {
 	if (typeof param1 !== 'object' || param1 === null) {
-		return Promise.reject('RCSErrorInputInvalid');
+		return Promise.reject('OLSKErrorInputInvalid');
 	}
 
 	if (typeof param2 !== 'string') {
-		return Promise.reject('RCSErrorInputInvalid');
+		return Promise.reject('OLSKErrorInputInvalid');
 	};
 
 	if (typeof param3 !== 'function') {
-		return Promise.reject('RCSErrorInputInvalid');
+		return Promise.reject('OLSKErrorInputInvalid');
 	};
 
 	if (param1[param2]) {
