@@ -69,3 +69,29 @@ exports.OLSKCacheResultFetchOnce = function (param1, param2, param3) {
 
 	return Promise.resolve(param3());
 };
+
+exports.OLSKCacheResultFetchInterval = function (param1, param2, param3, param4) {
+	if (typeof param1 !== 'object' || param1 === null) {
+		throw 'OLSKErrorInputInvalid';
+	}
+
+	if (typeof param2 !== 'string') {
+		throw 'OLSKErrorInputInvalid';
+	};
+
+	if (typeof param3 !== 'function') {
+		throw 'OLSKErrorInputInvalid';
+	};
+
+	if (typeof param4 !== 'number') {
+		throw 'OLSKErrorInputInvalid';
+	};
+
+	const callback = async function () {
+		return param1[param2] = await param3()
+	};
+
+	callback();
+
+	return setInterval(callback, param4)
+};

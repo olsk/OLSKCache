@@ -107,3 +107,78 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 	});
 
 });
+
+describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterval() {
+
+	it('throws if param1 not object', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchInterval(null, 'alfa', function () {}, 1);
+		}, /OLSKErrorInputInvalid/);
+	});
+	
+	it('throws if param2 not string', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchInterval({}, null, function () {}, 1);
+		}, /OLSKErrorInputInvalid/);
+	});
+	
+	it('throws if param3 not function', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchInterval({}, 'alfa', null, 1);
+		}, /OLSKErrorInputInvalid/);
+	});
+	
+	it('throws if param4 not number', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, null);
+		}, /OLSKErrorInputInvalid/);
+	});
+
+	it('returns timerID', function() {
+		deepEqual(mainModule.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, 1).constructor.name, 'Timeout');
+	});
+	
+	it('updates result before interval', function(done) {
+		let item = {};
+
+		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
+			return [item.alfa];
+		}, 10)
+
+		setTimeout(function() {
+			deepEqual(item.alfa, [undefined]);
+
+			done();
+		}, 5);
+	});
+	
+	it('updates result after interval once', function(done) {
+		let item = {};
+
+		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
+			return [item.alfa];
+		}, 10)
+
+		setTimeout(function() {
+			deepEqual(item.alfa, [[undefined]]);
+
+			done();
+		}, 15);
+	});
+	
+	it('updates result after interval once', function(done) {
+		let item = {};
+
+		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
+			return [item.alfa];
+		}, 10)
+
+		setTimeout(function() {
+			deepEqual(item.alfa, [[[undefined]]]);
+
+			done();
+		}, 25);
+	});
+
+});
+
