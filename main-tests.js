@@ -182,3 +182,58 @@ describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterv
 
 });
 
+describe('OLSKCacheExpiringMapEntry', function testOLSKCacheExpiringMapEntry() {
+
+	it('throws error if param1 not object', function() {
+		throws(function() {
+			mainModule.OLSKCacheExpiringMapEntry(null, null, null, 1);
+		}, /RCSErrorInputInvalid/);
+	});
+	
+	it('throws error if param4 not number', function() {
+		throws(function() {
+			mainModule.OLSKCacheExpiringMapEntry({}, null, null, null);
+		}, /RCSErrorInputInvalid/);
+	});
+	
+	it('returns param2', function() {
+		deepEqual(mainModule.OLSKCacheExpiringMapEntry({}, 'alfa', null, 0), 'alfa');
+	});
+	
+	it('sets param2', function() {
+		let item = {};
+
+		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10)
+
+		deepEqual(item, {
+			alfa: 'bravo',
+		});
+	});
+	
+	it('keeps param2 until duration', function(done) {
+		let item = {};
+
+		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10)
+
+		setTimeout(function () {
+			deepEqual(item, {
+				alfa: 'bravo',
+			});
+
+			done();
+		}, 5)
+	});
+	
+	it('deletes param2 after duration', function(done) {
+		let item = {};
+
+		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10)
+
+		setTimeout(function () {
+			deepEqual(item, {});
+
+			done();
+		}, 15)
+	});
+
+});

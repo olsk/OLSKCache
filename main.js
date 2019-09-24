@@ -95,3 +95,21 @@ exports.OLSKCacheResultFetchInterval = function (param1, param2, param3, param4)
 
 	return setInterval(callback, param4)
 };
+
+exports.OLSKCacheExpiringMapEntry = function (param1, param2, param3, param4) {
+	if (typeof param1 !== 'object' || param1 === null) {
+		throw 'RCSErrorInputInvalid';
+	}
+
+	if (typeof param4 !== 'number') {
+		throw 'RCSErrorInputInvalid';
+	};
+
+	param1[param2] = param3;
+
+	setTimeout(function () {
+		delete param1[param2];
+	}, param4)
+
+	return param2;
+};
