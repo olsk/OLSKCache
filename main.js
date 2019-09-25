@@ -50,7 +50,7 @@ exports.OLSKCacheFileExtensionJSON = function() {
 	return 'json';
 };
 
-exports.OLSKCacheResultFetchOnce = function (param1, param2, param3) {
+exports.OLSKCacheResultFetchOnce = async function (param1, param2, param3) {
 	if (typeof param1 !== 'object' || param1 === null) {
 		return Promise.reject('OLSKErrorInputInvalid');
 	}
@@ -63,11 +63,11 @@ exports.OLSKCacheResultFetchOnce = function (param1, param2, param3) {
 		return Promise.reject('OLSKErrorInputInvalid');
 	};
 
-	if (param1[param2]) {
-		return Promise.resolve(param1[param2]);
+	if (!param1[param2]) {
+		param1[param2] = await param3();
 	};
 
-	return Promise.resolve(param3());
+	return Promise.resolve(param1[param2]);
 };
 
 exports.OLSKCacheResultFetchInterval = function (param1, param2, param3, param4) {

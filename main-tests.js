@@ -100,10 +100,27 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 		}, 'alfa', function () {}), 'bravo');
 	});
 	
-	it('runs callback, sets value, and returns result', async function() {
+	it('returns callback result', async function() {
 		deepEqual(await mainModule.OLSKCacheResultFetchOnce({}, 'alfa', function () {
 			return Promise.resolve('bravo')
 		}), 'bravo');
+	});
+	
+	it('stores callback result', async function() {
+		let item = {
+			alfa: [],
+		};
+		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		})
+		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		})
+		deepEqual(item.alfa.length, 1);
 	});
 
 });
