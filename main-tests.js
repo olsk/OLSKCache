@@ -26,19 +26,19 @@ describe('OLSKCacheWriteFile', function testOLSKCacheWriteFile() {
 	it('throws if param1 not object', function() {
 		throws(function() {
 			mainModule.OLSKCacheWriteFile(null, 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not string', function() {
 		throws(function() {
 			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param3 not real directory', function() {
 		throws(function() {
 			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alpha', pathPackage.join(kTesting.StubRootDirectory(), 'alpha'));
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns cache file path', function() {
@@ -60,13 +60,13 @@ describe('OLSKCacheReadFile', function testOLSKCacheReadFile() {
 	it('throws if param1 not string', function() {
 		throws(function() {
 			mainModule.OLSKCacheReadFile(null, kTesting.StubRootDirectory());
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not real directory', function() {
 		throws(function() {
 			mainModule.OLSKCacheReadFile('alpha', pathPackage.join(kTesting.StubRootDirectory(), 'alpha'));
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null', function() {
@@ -130,25 +130,25 @@ describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterv
 	it('throws if param1 not object', function() {
 		throws(function () {
 			mainModule.OLSKCacheResultFetchInterval(null, 'alfa', function () {}, 1);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 	
 	it('throws if param2 not string', function() {
 		throws(function () {
 			mainModule.OLSKCacheResultFetchInterval({}, null, function () {}, 1);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 	
 	it('throws if param3 not function', function() {
 		throws(function () {
 			mainModule.OLSKCacheResultFetchInterval({}, 'alfa', null, 1);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 	
 	it('throws if param4 not number', function() {
 		throws(function () {
 			mainModule.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns timerID', function() {
@@ -204,13 +204,13 @@ describe('OLSKCacheExpiringMapEntry', function testOLSKCacheExpiringMapEntry() {
 	it('throws error if param1 not object', function() {
 		throws(function() {
 			mainModule.OLSKCacheExpiringMapEntry(null, null, null, 1);
-		}, /RCSErrorInputInvalid/);
+		}, /RCSErrorInputNotValid/);
 	});
 	
 	it('throws error if param4 not number', function() {
 		throws(function() {
 			mainModule.OLSKCacheExpiringMapEntry({}, null, null, null);
-		}, /RCSErrorInputInvalid/);
+		}, /RCSErrorInputNotValid/);
 	});
 	
 	it('returns param2', function() {
