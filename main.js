@@ -72,19 +72,19 @@ exports.OLSKCacheResultFetchOnce = async function (param1, param2, param3) {
 
 exports.OLSKCacheResultFetchInterval = function (param1, param2, param3, param4) {
 	if (typeof param1 !== 'object' || param1 === null) {
-		throw 'OLSKErrorInputInvalid';
+		throw new Error('OLSKErrorInputInvalid');
 	}
 
 	if (typeof param2 !== 'string') {
-		throw 'OLSKErrorInputInvalid';
+		throw new Error('OLSKErrorInputInvalid');
 	};
 
 	if (typeof param3 !== 'function') {
-		throw 'OLSKErrorInputInvalid';
+		throw new Error('OLSKErrorInputInvalid');
 	};
 
 	if (typeof param4 !== 'number') {
-		throw 'OLSKErrorInputInvalid';
+		throw new Error('OLSKErrorInputInvalid');
 	};
 
 	const callback = async function () {
@@ -98,11 +98,11 @@ exports.OLSKCacheResultFetchInterval = function (param1, param2, param3, param4)
 
 exports.OLSKCacheExpiringMapEntry = function (param1, param2, param3, param4) {
 	if (typeof param1 !== 'object' || param1 === null) {
-		throw 'RCSErrorInputInvalid';
+		throw new Error('RCSErrorInputInvalid');
 	}
 
 	if (typeof param4 !== 'number') {
-		throw 'RCSErrorInputInvalid';
+		throw new Error('RCSErrorInputInvalid');
 	};
 
 	param1[param2] = param3;
