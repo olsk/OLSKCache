@@ -125,6 +125,78 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 
 });
 
+describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire() {
+
+	it('rejects if param1 not object', function() {
+		return rejects(mainModule.OLSKCacheResultFetchExpire(null, 'alfa', function () {}, 1));
+	});
+	
+	it('rejects if param2 not string', function() {
+		return rejects(mainModule.OLSKCacheResultFetchExpire({}, null, function () {}, 1));
+	});
+	
+	it('rejects if param3 not function', function() {
+		return rejects(mainModule.OLSKCacheResultFetchExpire({}, 'alfa', null, 1));
+	});
+	
+	it('rejects if param4 not number', function() {
+		return rejects(mainModule.OLSKCacheResultFetchExpire({}, 'alfa', function () {}, null));
+	});
+	
+	it('returns value if exists', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFetchExpire({
+			alfa: 'bravo',
+		}, 'alfa', function () {}, 1), 'bravo');
+	});
+	
+	it('returns callback result', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFetchExpire({}, 'alfa', function () {
+			return Promise.resolve('bravo')
+		}, 1), 'bravo');
+	});
+	
+	it('stores callback result', async function() {
+		let item = {
+			alfa: [],
+		};
+		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		}, 1)
+		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		}, 1)
+		deepEqual(item.alfa.length, 1);
+	});
+	
+	it('clears callback result after param4', async function() {
+		let item = {
+			alfa: [],
+		};
+		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		}, 5);
+
+		await (new Promise(function (res, rej) {
+			setTimeout(async function () {
+				return res(await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+					item.alfa.push(null)
+
+					return Promise.resolve('charlie')
+				}, 1));
+			}, 10)
+		}))
+		
+		deepEqual(item.alfa.length, 2);
+	});
+
+});
+
 describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterval() {
 
 	it('throws if param1 not object', function() {
