@@ -89,8 +89,39 @@ exports.OLSKCacheResultFetchExpire = async function (param1, param2, param3, par
 
 	if (!param1[param2]) {
 		param1[param2] = await param3();
+
 		setTimeout(function () {
 			delete param1[param2];
+		}, param4);
+	};
+
+	return Promise.resolve(param1[param2]);
+};
+
+exports.OLSKCacheResultFetchRenew = async function (param1, param2, param3, param4, param5 = function () {}) {
+	if (typeof param1 !== 'object' || param1 === null) {
+		return Promise.reject('OLSKErrorInputNotValid');
+	}
+
+	if (typeof param2 !== 'string') {
+		return Promise.reject('OLSKErrorInputNotValid');
+	};
+
+	if (typeof param3 !== 'function') {
+		return Promise.reject('OLSKErrorInputNotValid');
+	};
+
+	if (typeof param4 !== 'number') {
+		throw new Error('RCSErrorInputNotValid');
+	};
+
+	if (!param1[param2]) {
+		param1[param2] = await param3();
+
+		const timerID = setInterval(async function () {
+			param1[param2] = await param3();
+			
+			param5(timerID);
 		}, param4);
 	};
 

@@ -197,6 +197,76 @@ describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire()
 
 });
 
+describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
+
+	it('rejects if param1 not object', function() {
+		return rejects(mainModule.OLSKCacheResultFetchRenew(null, 'alfa', function () {}, 1));
+	});
+	
+	it('rejects if param2 not string', function() {
+		return rejects(mainModule.OLSKCacheResultFetchRenew({}, null, function () {}, 1));
+	});
+	
+	it('rejects if param3 not function', function() {
+		return rejects(mainModule.OLSKCacheResultFetchRenew({}, 'alfa', null, 1));
+	});
+	
+	it('rejects if param4 not number', function() {
+		return rejects(mainModule.OLSKCacheResultFetchRenew({}, 'alfa', function () {}, null));
+	});
+	
+	it('returns value if exists', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFetchRenew({
+			alfa: 'bravo',
+		}, 'alfa', function () {}, 1), 'bravo');
+	});
+	
+	it('returns callback result', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFetchRenew({}, 'alfa', function () {
+			return Promise.resolve('bravo')
+		}, 1), 'bravo');
+	});
+	
+	it('stores callback result', async function() {
+		let item = {
+			alfa: [],
+		};
+		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		}, 1)
+		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		}, 1)
+		deepEqual(item.alfa.length, 1);
+	});
+	
+	it('renews callback result after param4', async function() {
+		let item = {
+			alfa: [],
+		};
+		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
+			item.alfa.push(null)
+
+			return Promise.resolve('charlie')
+		}, 3, function (timerID) {
+			if (item.alfa.length >= 3) {
+				return clearInterval(timerID);
+			};
+		});
+
+		await (new Promise(function (res, rej) {
+			return setTimeout(res, 15)
+		}))
+		
+		deepEqual(item.alfa.length, 3);
+	});
+
+});
+
 describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterval() {
 
 	it('throws if param1 not object', function() {
