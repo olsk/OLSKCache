@@ -46,7 +46,45 @@ describe('OLSKCacheWriteFile', function testOLSKCacheWriteFile() {
 	});
 
 	it('returns null and writes data for json', function() {
-		deepEqual(OLSKDisk.OLSKDiskReadFile(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+		deepEqual(OLSKDisk.OLSKDiskReadFile(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+	});
+
+});
+
+describe('OLSKCacheWriteFile2', function testOLSKCacheWriteFile2() {
+
+	beforeEach(function() {
+		OLSKDisk.OLSKDiskDeleteFolder(kTesting.StubRootDirectory());
+	});
+
+	it('throws if param1 not object', function() {
+		throws(function() {
+			mainModule.OLSKCacheWriteFile2(null, 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws if param2 not string', function() {
+		throws(function() {
+			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws if param3 not real directory', function() {
+		throws(function() {
+			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'));
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('writes data to OLSKDiskCacheFolderName', function() {
+		const item = OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory());
+		
+		mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', item);
+
+		deepEqual(OLSKDisk.OLSKDiskReadFile(require('path').join(item, OLSKDisk.OLSKDiskCacheFolderName(), 'alfa.json')), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+	});
+
+	it('returns param1', function() {
+		deepEqual(mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), kTesting.StubCacheObjectValid());
 	});
 
 });

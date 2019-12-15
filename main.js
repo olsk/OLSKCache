@@ -26,6 +26,26 @@ exports.OLSKCacheWriteFile = function(param1, param2, param3) {
 	return OLSKDisk.OLSKDiskWriteFile(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 };
 
+//_ OLSKCacheWriteFile2
+
+exports.OLSKCacheWriteFile2 = function(param1, param2, param3) {
+	if (typeof param1 !== 'object' || param1 === null) {
+		throw new Error('OLSKErrorInputNotValid');
+	}
+
+	if (typeof param2 !== 'string') {
+		throw new Error('OLSKErrorInputNotValid');
+	}
+
+	if (!OLSKDisk.OLSKDiskIsRealFolderPath(param3)) {
+		throw new Error('OLSKErrorInputNotValid');
+	}
+
+	OLSKDisk.OLSKDiskWriteFile(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+
+	return param1;
+};
+
 //_ OLSKCacheReadFile
 
 exports.OLSKCacheReadFile = function(param1, param2) {
