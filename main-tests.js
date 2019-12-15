@@ -112,7 +112,7 @@ describe('OLSKCacheReadFile', function testOLSKCacheReadFile() {
 	});
 
 	it('returns cacheObject if exists', function() {
-		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))
+		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
 		deepEqual(mainModule.OLSKCacheReadFile('alfa', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
 	});
 
@@ -140,7 +140,7 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 	
 	it('returns callback result', async function() {
 		deepEqual(await mainModule.OLSKCacheResultFetchOnce({}, 'alfa', function () {
-			return Promise.resolve('bravo')
+			return Promise.resolve('bravo');
 		}), 'bravo');
 	});
 	
@@ -149,15 +149,15 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 			alfa: [],
 		};
 		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
-			return Promise.resolve('charlie')
-		})
+			return Promise.resolve('charlie');
+		});
 		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
-			return Promise.resolve('charlie')
-		})
+			return Promise.resolve('charlie');
+		});
 		deepEqual(item.alfa.length, 1);
 	});
 
@@ -189,7 +189,7 @@ describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire()
 	
 	it('returns callback result', async function() {
 		deepEqual(await mainModule.OLSKCacheResultFetchExpire({}, 'alfa', function () {
-			return Promise.resolve('bravo')
+			return Promise.resolve('bravo');
 		}, 1), 'bravo');
 	});
 	
@@ -198,15 +198,15 @@ describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire()
 			alfa: [],
 		};
 		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
-			return Promise.resolve('charlie')
-		}, 1)
+			return Promise.resolve('charlie');
+		}, 1);
 		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
-			return Promise.resolve('charlie')
-		}, 1)
+			return Promise.resolve('charlie');
+		}, 1);
 		deepEqual(item.alfa.length, 1);
 	});
 	
@@ -215,20 +215,20 @@ describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire()
 			alfa: [],
 		};
 		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
-			return Promise.resolve('charlie')
+			return Promise.resolve('charlie');
 		}, 5);
 
 		await (new Promise(function (res, rej) {
 			setTimeout(async function () {
 				return res(await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
-					item.alfa.push(null)
+					item.alfa.push(null);
 
-					return Promise.resolve('charlie')
+					return Promise.resolve('charlie');
 				}, 1));
-			}, 10)
-		}))
+			}, 10);
+		}));
 		
 		deepEqual(item.alfa.length, 2);
 	});
@@ -265,18 +265,18 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 		};
 
 		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
-			return 'charlie'
+			return 'charlie';
 		}, 3, clearInterval);
 
 		deepEqual(item.bravo, 'charlie');
 
 		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
-			item.alfa.push(null)
+			item.alfa.push(null);
 
 			return 'delta';
-		}, 3, clearInterval)
+		}, 3, clearInterval);
 
 		deepEqual(item.bravo, 'charlie');
 		deepEqual(item.alfa.length, 1);
@@ -284,7 +284,7 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 	
 	it('returns callback result', async function() {
 		deepEqual(await mainModule.OLSKCacheResultFetchRenew({}, 'alfa', function () {
-			return 'bravo'
+			return 'bravo';
 		}, 1, clearInterval), 'bravo');
 	});
 	
@@ -298,8 +298,8 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 		deepEqual(item.alfa, 'bravo');
 
 		await (new Promise(function (res, rej) {
-			return setTimeout(res, 5)
-		}))
+			return setTimeout(res, 5);
+		}));
 		
 		deepEqual(item.alfa, 'charlie');
 	});
@@ -316,8 +316,8 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 		});
 
 		await (new Promise(function (res, rej) {
-			return setTimeout(res, 5)
-		}))
+			return setTimeout(res, 5);
+		}));
 
 		deepEqual(item.charlie, true);
 	});
@@ -341,8 +341,8 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 		});
 
 		await (new Promise(function (res, rej) {
-			return setTimeout(res, 15)
-		}))
+			return setTimeout(res, 15);
+		}));
 
 		deepEqual(item.charlie, item.delta);
 	});
@@ -357,12 +357,12 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 		}, 3, function (timerID) {
 			if (item.alfa.length >= 3) {
 				return clearInterval(timerID);
-			};
+			}
 		});
 
 		await (new Promise(function (res, rej) {
-			return setTimeout(res, 15)
-		}))
+			return setTimeout(res, 15);
+		}));
 		
 		deepEqual(item.alfa.length, 3);
 	});
@@ -404,7 +404,7 @@ describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterv
 
 		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
 			return [item.alfa];
-		}, 10)
+		}, 10);
 
 		setTimeout(function() {
 			deepEqual(item.alfa, [undefined]);
@@ -418,7 +418,7 @@ describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterv
 
 		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
 			return [item.alfa];
-		}, 10)
+		}, 10);
 
 		setTimeout(function() {
 			deepEqual(item.alfa, [[undefined]]);
@@ -432,7 +432,7 @@ describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterv
 
 		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
 			return [item.alfa];
-		}, 10)
+		}, 10);
 
 		setTimeout(function() {
 			deepEqual(item.alfa, [[[undefined]]]);
@@ -464,7 +464,7 @@ describe('OLSKCacheExpiringMapEntry', function testOLSKCacheExpiringMapEntry() {
 	it('sets param2', function() {
 		let item = {};
 
-		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10)
+		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
 
 		deepEqual(item, {
 			alfa: 'bravo',
@@ -474,7 +474,7 @@ describe('OLSKCacheExpiringMapEntry', function testOLSKCacheExpiringMapEntry() {
 	it('keeps param2 until duration', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10)
+		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
 
 		setTimeout(function () {
 			deepEqual(item, {
@@ -482,19 +482,19 @@ describe('OLSKCacheExpiringMapEntry', function testOLSKCacheExpiringMapEntry() {
 			});
 
 			done();
-		}, 5)
+		}, 5);
 	});
 	
 	it('deletes param2 after duration', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10)
+		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
 
 		setTimeout(function () {
 			deepEqual(item, {});
 
 			done();
-		}, 15)
+		}, 15);
 	});
 
 });

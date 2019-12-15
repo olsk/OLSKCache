@@ -65,15 +65,15 @@ const mod = {
 
 		if (typeof param2 !== 'string') {
 			return Promise.reject('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param3 !== 'function') {
 			return Promise.reject('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (!param1[param2]) {
 			param1[param2] = await param3();
-		};
+		}
 
 		return Promise.resolve(param1[param2]);
 	},
@@ -85,15 +85,15 @@ const mod = {
 
 		if (typeof param2 !== 'string') {
 			return Promise.reject('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param3 !== 'function') {
 			return Promise.reject('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param4 !== 'number') {
 			throw new Error('RCSErrorInputNotValid');
-		};
+		}
 
 		if (!param1[param2]) {
 			param1[param2] = await param3();
@@ -101,7 +101,7 @@ const mod = {
 			setTimeout(function () {
 				delete param1[param2];
 			}, param4);
-		};
+		}
 
 		return Promise.resolve(param1[param2]);
 	},
@@ -113,15 +113,15 @@ const mod = {
 
 		if (typeof param2 !== 'string') {
 			return Promise.reject('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param3 !== 'function') {
 			return Promise.reject('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param4 !== 'number') {
 			throw new Error('RCSErrorInputNotValid');
-		};
+		}
 
 		if (!param1[param2]) {
 			let timerID;
@@ -137,7 +137,7 @@ const mod = {
 			timerID = setInterval(function () {
 				return callback();
 			}, param4);
-		};
+		}
 
 		return Promise.resolve(param1[param2]);
 	},
@@ -149,23 +149,23 @@ const mod = {
 
 		if (typeof param2 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param3 !== 'function') {
 			throw new Error('OLSKErrorInputNotValid');
-		};
+		}
 
 		if (typeof param4 !== 'number') {
 			throw new Error('OLSKErrorInputNotValid');
-		};
+		}
 
 		const callback = async function () {
-			return param1[param2] = await param3()
+			return param1[param2] = await param3();
 		};
 
 		callback();
 
-		return setInterval(callback, param4)
+		return setInterval(callback, param4);
 	},
 
 	OLSKCacheExpiringMapEntry(param1, param2, param3, param4) {
@@ -175,13 +175,13 @@ const mod = {
 
 		if (typeof param4 !== 'number') {
 			throw new Error('RCSErrorInputNotValid');
-		};
+		}
 
 		param1[param2] = param3;
 
 		setTimeout(function () {
 			delete param1[param2];
-		}, param4)
+		}, param4);
 
 		return param2;
 	},
