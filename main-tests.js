@@ -287,14 +287,17 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 	it('calls param5 on renewal', async function() {
 		let item = {
 			charlie: [],
+			delta: [],
 		};
 
 		await mainModule.OLSKCacheResultFetchRenew(item, 'alfa', function () {
-			return 'bravo';
-		}, 3, function (timerID) {
 			item.charlie.push(null);
 
-			if (item.charlie.length == 3) {
+			return 'bravo';
+		}, 3, function (timerID) {
+			item.delta.push(null);
+
+			if (item.delta.length == 3) {
 				return clearInterval(timerID);
 			}
 		});
@@ -303,7 +306,7 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 			return setTimeout(res, 15)
 		}))
 
-		deepEqual(item.charlie, [null, null, null]);
+		deepEqual(item.charlie, item.delta);
 	});
 	
 	it('passes timerID to param5', async function() {
