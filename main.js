@@ -116,12 +116,18 @@ exports.OLSKCacheResultFetchRenew = async function (param1, param2, param3, para
 	};
 
 	if (!param1[param2]) {
-		param1[param2] = await param3();
-
-		const timerID = setInterval(async function () {
+		let timerID;
+		
+		const callback = async function () {
 			param1[param2] = await param3();
-			
-			param5(timerID);
+
+			return param5(timerID);
+		};
+
+		await callback();
+
+		timerID = setInterval(function () {
+			return callback();
 		}, param4);
 	};
 
