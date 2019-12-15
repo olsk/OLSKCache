@@ -8,7 +8,7 @@ const pathPackage = require('path');
 
 const kTesting = {
 	StubRootDirectory: function () {
-		return pathPackage.join(OLSKDisk.OLSKDiskWorkspaceTestingFolderName(), OLSKDisk.OLSKDiskWorkspaceTestingFolderSubfolderNameFor('alpha.cache'));
+		return pathPackage.join(OLSKDisk.OLSKDiskWorkspaceTestingFolderName(), OLSKDisk.OLSKDiskWorkspaceTestingFolderSubfolderNameFor('alfa.cache'));
 	},
 	StubCacheObjectValid: function () {
 		return {
@@ -25,7 +25,7 @@ describe('OLSKCacheWriteFile', function testOLSKCacheWriteFile() {
 
 	it('throws if param1 not object', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(null, 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteFile(null, 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -37,12 +37,12 @@ describe('OLSKCacheWriteFile', function testOLSKCacheWriteFile() {
 
 	it('throws if param3 not real directory', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alpha', pathPackage.join(kTesting.StubRootDirectory(), 'alpha'));
+			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns cache file path', function() {
-		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheFolderName(), 'alpha' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
+		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheFolderName(), 'alfa' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
 	});
 
 	it('returns null and writes data for json', function() {
@@ -103,17 +103,17 @@ describe('OLSKCacheReadFile', function testOLSKCacheReadFile() {
 
 	it('throws if param2 not real directory', function() {
 		throws(function() {
-			mainModule.OLSKCacheReadFile('alpha', pathPackage.join(kTesting.StubRootDirectory(), 'alpha'));
+			mainModule.OLSKCacheReadFile('alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null', function() {
-		deepEqual(mainModule.OLSKCacheReadFile('alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), null);
+		deepEqual(mainModule.OLSKCacheReadFile('alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), null);
 	});
 
 	it('returns cacheObject if exists', function() {
-		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alpha', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))
-		deepEqual(mainModule.OLSKCacheReadFile('alpha', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
+		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))
+		deepEqual(mainModule.OLSKCacheReadFile('alfa', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
 	});
 
 });
