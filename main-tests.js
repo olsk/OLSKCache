@@ -17,7 +17,7 @@ const kTesting = {
 	},
 };
 
-describe('OLSKCacheWriteFile', function testOLSKCacheWriteFile() {
+describe('OLSKCacheWriteFile', function test_OLSKCacheWriteFile() {
 
 	beforeEach(function() {
 		OLSKDisk.OLSKDiskDeleteFolder(kTesting.StubRootDirectory());
@@ -51,7 +51,7 @@ describe('OLSKCacheWriteFile', function testOLSKCacheWriteFile() {
 
 });
 
-describe('OLSKCacheWriteFile2', function testOLSKCacheWriteFile2() {
+describe('OLSKCacheWriteFile2', function test_OLSKCacheWriteFile2() {
 
 	beforeEach(function() {
 		OLSKDisk.OLSKDiskDeleteFolder(kTesting.StubRootDirectory());
@@ -89,7 +89,7 @@ describe('OLSKCacheWriteFile2', function testOLSKCacheWriteFile2() {
 
 });
 
-describe('OLSKCacheReadFile', function testOLSKCacheReadFile() {
+describe('OLSKCacheReadFile', function test_OLSKCacheReadFile() {
 
 	beforeEach(function() {
 		OLSKDisk.OLSKDiskDeleteFolder(kTesting.StubRootDirectory());
@@ -118,7 +118,7 @@ describe('OLSKCacheReadFile', function testOLSKCacheReadFile() {
 
 });
 
-describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
+describe('OLSKCacheResultFetchOnce', function test_OLSKCacheResultFetchOnce() {
 
 	it('rejects if param1 not object', function() {
 		return rejects(mainModule.OLSKCacheResultFetchOnce(null, 'alfa', function () {}));
@@ -163,7 +163,7 @@ describe('OLSKCacheResultFetchOnce', function testOLSKCacheResultFetchOnce() {
 
 });
 
-describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire() {
+describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire() {
 
 	it('rejects if param1 not object', function() {
 		return rejects(mainModule.OLSKCacheResultFetchExpire(null, 'alfa', function () {}, 1));
@@ -235,7 +235,7 @@ describe('OLSKCacheResultFetchExpire', function testOLSKCacheResultFetchExpire()
 
 });
 
-describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
+describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() {
 
 	it('rejects if param1 not object', function() {
 		return rejects(mainModule.OLSKCacheResultFetchRenew(null, 'alfa', function () {}, 1));
@@ -369,7 +369,7 @@ describe('OLSKCacheResultFetchRenew', function testOLSKCacheResultFetchRenew() {
 
 });
 
-describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterval() {
+describe('OLSKCacheResultFetchInterval', function test_OLSKCacheResultFetchInterval() {
 
 	it('throws if param1 not object', function() {
 		throws(function () {
@@ -443,7 +443,7 @@ describe('OLSKCacheResultFetchInterval', function testOLSKCacheResultFetchInterv
 
 });
 
-describe('OLSKCacheExpiringMapEntry', function testOLSKCacheExpiringMapEntry() {
+describe('OLSKCacheExpiringMapEntry', function test_OLSKCacheExpiringMapEntry() {
 
 	it('throws error if param1 not object', function() {
 		throws(function() {
