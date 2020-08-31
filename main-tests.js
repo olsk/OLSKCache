@@ -148,16 +148,76 @@ describe('OLSKCacheResultFetchOnce', function test_OLSKCacheResultFetchOnce() {
 			alfa: [],
 		};
 		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
-			item.alfa.push(null);
-
-			return Promise.resolve('charlie');
+			return item.alfa.push('charlie');
 		});
 		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
-			item.alfa.push(null);
+			return item.alfa.push('delta');
 
 			return Promise.resolve('charlie');
 		});
-		deepEqual(item.alfa.length, 1);
+		deepEqual(item.alfa, ['charlie']);
+	});
+
+});
+
+describe('OLSKCacheResultFetchOnceSync', function test_OLSKCacheResultFetchOnceSync() {
+
+	it('throws if param1 not object', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchOnceSync(null, 'alfa', function () {});
+		}, /ErrorInputNotValid/);
+	});
+	
+	it('throws if param2 not string', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchOnceSync({}, null, function () {});
+		}, /ErrorInputNotValid/);
+	});
+	
+	it('throws if param3 not function', function() {
+		throws(function () {
+			mainModule.OLSKCacheResultFetchOnceSync({}, 'alfa', null);
+		}, /ErrorInputNotValid/);
+	});
+	
+	it('returns value if exists', function() {
+		deepEqual(mainModule.OLSKCacheResultFetchOnceSync({
+			alfa: 'bravo',
+		}, 'alfa', function () {}), 'bravo');
+	});
+	
+	it('returns callback result', async function() {
+		deepEqual(await mainModule.OLSKCacheResultFetchOnceSync({}, 'alfa', function () {
+			return Promise.resolve('bravo');
+		}), 'bravo');
+	});
+	
+	it('stores callback result', async function() {
+		let item = {
+			alfa: [],
+		};
+		await mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+			return item.alfa.push('charlie');
+		});
+		await mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+			return item.alfa.push('delta');
+
+			return Promise.resolve('charlie');
+		});
+		deepEqual(item.alfa, ['charlie']);
+	});
+	
+	it('stores calls without await', async function() {
+		let item = {
+			alfa: [],
+		};
+		mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+			return item.alfa.push('charlie');
+		});
+		await mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+			return item.alfa.push('delta');
+		});
+		deepEqual(item.alfa, ['charlie']);
 	});
 
 });
