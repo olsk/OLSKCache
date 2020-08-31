@@ -1,7 +1,6 @@
 const { throws, rejects, deepEqual } = require('assert');
 
-
-const mainModule = require('./main');
+const mainModule = require('./main.js');
 
 const OLSKDisk = require('OLSKDisk');
 const pathPackage = require('path');
@@ -25,28 +24,28 @@ describe('OLSKCacheWriteFile', function test_OLSKCacheWriteFile() {
 
 	it('throws if param1 not object', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(null, 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteFile(null, 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param3 not real directory', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'));
+			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns cache file path', function() {
-		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheFolderName(), 'alfa' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
+		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage), pathPackage.join(kTesting.StubRootDirectory(), OLSKDisk.OLSKDiskCacheFolderName(), 'alfa' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
 	});
 
 	it('returns null and writes data for json', function() {
-		deepEqual(OLSKDisk.OLSKDiskReadFile(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()))), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+		deepEqual(OLSKDisk.OLSKDiskReadFile(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage), OLSKDisk, pathPackage), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
 });
@@ -59,32 +58,32 @@ describe('OLSKCacheWriteFile2', function test_OLSKCacheWriteFile2() {
 
 	it('throws if param1 not object', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile2(null, 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteFile2(null, 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), null, OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param3 not real directory', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'));
+			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('writes data to OLSKDiskCacheFolderName', function() {
 		const item = OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory());
 		
-		mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', item);
+		mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', item, OLSKDisk, pathPackage);
 
-		deepEqual(OLSKDisk.OLSKDiskReadFile(require('path').join(item, OLSKDisk.OLSKDiskCacheFolderName(), 'alfa.json')), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+		deepEqual(OLSKDisk.OLSKDiskReadFile(require('path').join(item, OLSKDisk.OLSKDiskCacheFolderName(), 'alfa.json'), OLSKDisk, pathPackage), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
 	it('returns param1', function() {
-		deepEqual(mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), kTesting.StubCacheObjectValid());
+		deepEqual(mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage), kTesting.StubCacheObjectValid());
 	});
 
 });
@@ -97,23 +96,23 @@ describe('OLSKCacheReadFile', function test_OLSKCacheReadFile() {
 
 	it('throws if param1 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheReadFile(null, kTesting.StubRootDirectory());
+			mainModule.OLSKCacheReadFile(null, kTesting.StubRootDirectory(), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not real directory', function() {
 		throws(function() {
-			mainModule.OLSKCacheReadFile('alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'));
+			mainModule.OLSKCacheReadFile('alfa', pathPackage.join(kTesting.StubRootDirectory(), 'alfa'), OLSKDisk, pathPackage);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null', function() {
-		deepEqual(mainModule.OLSKCacheReadFile('alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory())), null);
+		deepEqual(mainModule.OLSKCacheReadFile('alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage), null);
 	});
 
 	it('returns cacheObject if exists', function() {
-		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
-		deepEqual(mainModule.OLSKCacheReadFile('alfa', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
+		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', OLSKDisk.OLSKDiskCreateFolder(kTesting.StubRootDirectory()), OLSKDisk, pathPackage);
+		deepEqual(mainModule.OLSKCacheReadFile('alfa', kTesting.StubRootDirectory(), OLSKDisk, pathPackage), kTesting.StubCacheObjectValid());
 	});
 
 });

@@ -1,10 +1,6 @@
-const OLSKDisk = require('OLSKDisk');
-
-const pathPackage = require('path');
-
 const mod = {
 
-	OLSKCacheWriteFile (param1, param2, param3) {
+	OLSKCacheWriteFile (param1, param2, param3, OLSKDisk, pathPackage) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -20,7 +16,7 @@ const mod = {
 		return OLSKDisk.OLSKDiskWriteFile(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 	},
 
-	OLSKCacheWriteFile2 (param1, param2, param3) {
+	OLSKCacheWriteFile2 (param1, param2, param3, OLSKDisk, pathPackage) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -38,7 +34,7 @@ const mod = {
 		return param1;
 	},
 
-	OLSKCacheReadFile (param1, param2) {
+	OLSKCacheReadFile (param1, param2, OLSKDisk, pathPackage) {
 		if (typeof param1 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
