@@ -38,7 +38,7 @@ describe('OLSKCacheWriteFile', function test_OLSKCacheWriteFile() {
 	});
 
 	it('returns cache file path', function() {
-		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), require('path').join(kTesting.StubRootDirectory(), 'alfa' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
+		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), require('path').join(kTesting.StubRootDirectory(), 'alfa.json'));
 	});
 
 	it('returns null and writes data for json', function() {
