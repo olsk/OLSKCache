@@ -38,7 +38,7 @@ describe('OLSKCacheWriteFile', function test_OLSKCacheWriteFile() {
 	});
 
 	it('returns cache file path', function() {
-		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), require('path').join(kTesting.StubRootDirectory(), require('OLSKDisk').OLSKDiskCacheFolderName(), 'alfa' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
+		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), require('path').join(kTesting.StubRootDirectory(), 'alfa' + '.' + mainModule.OLSKCacheFileExtensionJSON()));
 	});
 
 	it('returns null and writes data for json', function() {
@@ -71,12 +71,12 @@ describe('OLSKCacheWriteFile2', function test_OLSKCacheWriteFile2() {
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('writes data to OLSKDiskCacheFolderName', function() {
+	it('writes data', function() {
 		const item = require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory());
 		
 		mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', item);
 
-		deepEqual(require('OLSKDisk').OLSKDiskReadFile(require('path').join(item, require('OLSKDisk').OLSKDiskCacheFolderName(), 'alfa.json')), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
+		deepEqual(require('OLSKDisk').OLSKDiskReadFile(require('path').join(item, 'alfa.json')), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
 	it('returns param1', function() {

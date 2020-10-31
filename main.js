@@ -13,7 +13,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(require('path').join(param3, require('OLSKDisk').OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+		return require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(param3), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 	},
 
 	OLSKCacheWriteFile2 (param1, param2, param3) {
@@ -29,7 +29,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(require('path').join(param3, require('OLSKDisk').OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+		require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(param3), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 		return param1;
 	},
@@ -44,7 +44,7 @@ const mod = {
 		}
 
 		try {
-			return JSON.parse(require('OLSKDisk').OLSKDiskReadFile(require('path').join(param2, require('OLSKDisk').OLSKDiskCacheFolderName(), [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
+			return JSON.parse(require('OLSKDisk').OLSKDiskReadFile(require('path').join(param2, [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
 		} catch(e) {
 			return null;
 		}
