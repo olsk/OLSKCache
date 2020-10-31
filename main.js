@@ -13,22 +13,6 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(param3), [param2, '.json'].join('')), JSON.stringify(param1, null, '\t'));
-	},
-
-	OLSKCacheWriteFile2 (param1, param2, param3) {
-		if (typeof param1 !== 'object' || param1 === null) {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param2 !== 'string') {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param3 !== 'string') {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
 		require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(param3), [param2, '.json'].join('')), JSON.stringify(param1, null, '\t'));
 
 		return param1;
