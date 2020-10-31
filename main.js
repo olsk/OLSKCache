@@ -1,6 +1,6 @@
 const mod = {
 
-	OLSKCacheWriteFile (param1, param2, param3, OLSKDisk) {
+	OLSKCacheWriteFile (param1, param2, param3) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -9,14 +9,14 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!OLSKDisk.OLSKDiskIsRealFolderPath(param3)) {
+		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(param3)) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return OLSKDisk.OLSKDiskWriteFile(require('path').join(OLSKDisk.OLSKDiskCreateFolder(require('path').join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+		return require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(require('path').join(param3, require('OLSKDisk').OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 	},
 
-	OLSKCacheWriteFile2 (param1, param2, param3, OLSKDisk) {
+	OLSKCacheWriteFile2 (param1, param2, param3) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -25,26 +25,26 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!OLSKDisk.OLSKDiskIsRealFolderPath(param3)) {
+		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(param3)) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		OLSKDisk.OLSKDiskWriteFile(require('path').join(OLSKDisk.OLSKDiskCreateFolder(require('path').join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+		require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(require('path').join(param3, require('OLSKDisk').OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 		return param1;
 	},
 
-	OLSKCacheReadFile (param1, param2, OLSKDisk) {
+	OLSKCacheReadFile (param1, param2) {
 		if (typeof param1 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!OLSKDisk.OLSKDiskIsRealFolderPath(param2)) {
+		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(param2)) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		try {
-			return JSON.parse(OLSKDisk.OLSKDiskReadFile(require('path').join(param2, OLSKDisk.OLSKDiskCacheFolderName(), [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
+			return JSON.parse(require('OLSKDisk').OLSKDiskReadFile(require('path').join(param2, require('OLSKDisk').OLSKDiskCacheFolderName(), [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
 		} catch(e) {
 			return null;
 		}
