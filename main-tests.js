@@ -4,7 +4,7 @@ const mainModule = require('./main.js');
 
 const kTesting = {
 	StubRootDirectory: function () {
-		return require('path').join(require('OLSKDisk').OLSKDiskWorkspaceTestingFolderName(), require('OLSKDisk').OLSKDiskWorkspaceTestingFolderSubfolderNameFor('alfa.cache'));
+		return require('path').join(__dirname, '__testing', require('OLSKDisk').OLSKDiskWorkspaceTestingFolderSubfolderNameFor('alfa.cache'));
 	},
 	StubCacheObjectValid: function () {
 		return {
