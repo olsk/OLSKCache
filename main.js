@@ -1,6 +1,6 @@
 const mod = {
 
-	OLSKCacheWriteFile (param1, param2, param3, OLSKDisk, pathPackage) {
+	OLSKCacheWriteFile (param1, param2, param3, OLSKDisk) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -13,10 +13,10 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return OLSKDisk.OLSKDiskWriteFile(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+		return OLSKDisk.OLSKDiskWriteFile(require('path').join(OLSKDisk.OLSKDiskCreateFolder(require('path').join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 	},
 
-	OLSKCacheWriteFile2 (param1, param2, param3, OLSKDisk, pathPackage) {
+	OLSKCacheWriteFile2 (param1, param2, param3, OLSKDisk) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -29,12 +29,12 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		OLSKDisk.OLSKDiskWriteFile(pathPackage.join(OLSKDisk.OLSKDiskCreateFolder(pathPackage.join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
+		OLSKDisk.OLSKDiskWriteFile(require('path').join(OLSKDisk.OLSKDiskCreateFolder(require('path').join(param3, OLSKDisk.OLSKDiskCacheFolderName())), [param2, '.', exports.OLSKCacheFileExtensionJSON()].join('')), JSON.stringify(param1, null, '\t'));
 
 		return param1;
 	},
 
-	OLSKCacheReadFile (param1, param2, OLSKDisk, pathPackage) {
+	OLSKCacheReadFile (param1, param2, OLSKDisk) {
 		if (typeof param1 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -44,7 +44,7 @@ const mod = {
 		}
 
 		try {
-			return JSON.parse(OLSKDisk.OLSKDiskReadFile(pathPackage.join(param2, OLSKDisk.OLSKDiskCacheFolderName(), [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
+			return JSON.parse(OLSKDisk.OLSKDiskReadFile(require('path').join(param2, OLSKDisk.OLSKDiskCacheFolderName(), [param1, '.', exports.OLSKCacheFileExtensionJSON()].join(''))));
 		} catch(e) {
 			return null;
 		}
