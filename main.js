@@ -13,7 +13,9 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		require('OLSKDisk').OLSKDiskWriteFile(require('path').join(require('OLSKDisk').OLSKDiskCreateFolder(param3), [param2, '.json'].join('')), JSON.stringify(param1, null, '\t'));
+		const _require = require;
+
+		_require('OLSKDisk').OLSKDiskWriteFile(_require('path').join(_require('OLSKDisk').OLSKDiskCreateFolder(param3), [param2, '.json'].join('')), JSON.stringify(param1, null, '\t'));
 
 		return param1;
 	},
@@ -27,8 +29,10 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
+		const _require = require;
+
 		try {
-			return JSON.parse(require('OLSKDisk').OLSKDiskReadFile(require('path').join(param2, [param1, '.json'].join(''))));
+			return JSON.parse(_require('OLSKDisk').OLSKDiskReadFile(_require('path').join(param2, [param1, '.json'].join(''))));
 		} catch(e) {
 			return null;
 		}
