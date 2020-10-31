@@ -31,9 +31,9 @@ describe('OLSKCacheWriteFile', function test_OLSKCacheWriteFile() {
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws if param3 not real directory', function() {
+	it('throws if param3 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('path').join(kTesting.StubRootDirectory(), 'alfa'));
+			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -65,9 +65,9 @@ describe('OLSKCacheWriteFile2', function test_OLSKCacheWriteFile2() {
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws if param3 not real directory', function() {
+	it('throws if param3 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', require('path').join(kTesting.StubRootDirectory(), 'alfa'));
+			mainModule.OLSKCacheWriteFile2(kTesting.StubCacheObjectValid(), 'alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -97,9 +97,9 @@ describe('OLSKCacheReadFile', function test_OLSKCacheReadFile() {
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws if param2 not real directory', function() {
+	it('throws if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheReadFile('alfa', require('path').join(kTesting.StubRootDirectory(), 'alfa'));
+			mainModule.OLSKCacheReadFile('alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 

@@ -9,7 +9,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(param3)) {
+		if (typeof param3 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
@@ -25,7 +25,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(param3)) {
+		if (typeof param3 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
@@ -39,7 +39,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(param2)) {
+		if (typeof param2 !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
