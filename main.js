@@ -106,40 +106,44 @@ const mod = {
 		return param1[param2];
 	},
 
-	async OLSKCacheResultFetchRenew (param1, param2, param3, param4, param5 = function () {}) {
-		if (typeof param1 !== 'object' || param1 === null) {
+	async OLSKCacheResultFetchRenew (params) {
+		if (typeof params !== 'object' || params === null) {
 			return Promise.reject('OLSKErrorInputNotValid');
 		}
 
-		if (typeof param2 !== 'string') {
+		if (typeof params.ParamMap !== 'object' || params.ParamMap === null) {
 			return Promise.reject('OLSKErrorInputNotValid');
 		}
 
-		if (typeof param3 !== 'function') {
+		if (typeof params.ParamKey !== 'string') {
 			return Promise.reject('OLSKErrorInputNotValid');
 		}
 
-		if (typeof param4 !== 'number') {
+		if (typeof params.ParamCallback !== 'function') {
+			return Promise.reject('OLSKErrorInputNotValid');
+		}
+
+		if (typeof params.ParamInterval !== 'number') {
 			throw new Error('RCSErrorInputNotValid');
 		}
 
-		if (!param1[param2]) {
-			let timerID;
-			
-			const callback = async function () {
-				param1[param2] = await param3();
+		let timerID;
+		
+		const callback = async function () {
+			params.ParamMap[params.ParamKey] = await params.ParamCallback();
 
-				return param5(timerID);
-			};
+			return params._ParamTimerFunction(timerID);
+		};
 
+		if (!params.ParamMap[params.ParamKey]) {
 			await callback();
-
-			timerID = setInterval(function () {
-				return callback();
-			}, param4);
 		}
 
-		return param1[param2];
+		timerID = setInterval(function () {
+			return callback();
+		}, params.ParamInterval);
+
+		return params.ParamMap[params.ParamKey];
 	},
 
 	OLSKCacheResultFetchInterval(param1, param2, param3, param4) {

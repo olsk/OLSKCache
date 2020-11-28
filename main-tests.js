@@ -259,134 +259,221 @@ describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire(
 
 describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() {
 
-	it('rejects if param1 not object', function() {
-		return rejects(mainModule.OLSKCacheResultFetchRenew(null, 'alfa', function () {}, 1));
+	const _OLSKCacheResultFetchRenew = function (inputData) {
+		return mainModule.OLSKCacheResultFetchRenew(Object.assign({
+			ParamMap: {},
+			ParamKey: Math.random().toString(),
+			ParamCallback: (function () {}),
+			ParamInterval: 1,
+			_ParamTimerFunction: clearInterval,
+		}, inputData));
+	};
+
+	it('rejects if not object', function() {
+		return rejects(mainModule.OLSKCacheResultFetchRenew(null));
 	});
-	
-	it('rejects if param2 not string', function() {
-		return rejects(mainModule.OLSKCacheResultFetchRenew({}, null, function () {}, 1));
-	});
-	
-	it('rejects if param3 not function', function() {
-		return rejects(mainModule.OLSKCacheResultFetchRenew({}, 'alfa', null, 1));
-	});
-	
-	it('rejects if param4 not number', function() {
-		return rejects(mainModule.OLSKCacheResultFetchRenew({}, 'alfa', function () {}, null));
-	});
-	
-	it('returns value if exists', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchRenew({
-			alfa: 'bravo',
-		}, 'alfa', function () {}, 1, clearInterval), 'bravo');
-	});
-	
-	it('skips callback if exists', async function() {
-		let item = {
-			alfa: [],
-		};
 
-		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
-			item.alfa.push(null);
-
-			return 'charlie';
-		}, 3, clearInterval);
-
-		deepEqual(item.bravo, 'charlie');
-
-		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
-			item.alfa.push(null);
-
-			return 'delta';
-		}, 3, clearInterval);
-
-		deepEqual(item.bravo, 'charlie');
-		deepEqual(item.alfa.length, 1);
-	});
-	
-	it('returns callback result', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchRenew({}, 'alfa', function () {
-			return 'bravo';
-		}, 1, clearInterval), 'bravo');
-	});
-	
-	it('renews callback result after param4', async function() {
-		let item = {};
-		
-		await mainModule.OLSKCacheResultFetchRenew(item, 'alfa', function () {
-			return !item.alfa ? 'bravo' : 'charlie';
-		}, 3, clearInterval);
-
-		deepEqual(item.alfa, 'bravo');
-
-		await (new Promise(function (res, rej) {
-			return setTimeout(res, 5);
+	it('rejects if ParamMap not object', function() {
+		return rejects(_OLSKCacheResultFetchRenew({
+			ParamMap: null,
 		}));
-		
-		deepEqual(item.alfa, 'charlie');
 	});
 	
-	it('calls param5 if no value', async function() {
-		let item = {};
+	it('rejects if ParamKey not string', function() {
+		return rejects(_OLSKCacheResultFetchRenew({
+			ParamKey: null,
+		}));
+	});
+	
+	it('rejects if ParamCallback not function', function() {
+		return rejects(_OLSKCacheResultFetchRenew({
+			ParamCallback: null,
+		}));
+	});
+	
+	it('rejects if ParamInterval not number', function() {
+		return rejects(_OLSKCacheResultFetchRenew({
+			ParamInterval: '1',
+		}));
+	});
 
-		await mainModule.OLSKCacheResultFetchRenew(item, 'alfa', function () {
-			return 'bravo';
-		}, 3, function (timerID) {
-			item.charlie = true;
+	context('no existing', function () {
 
-			return clearInterval(timerID);
+		it('returns callback result', async function() {
+			const item = Math.random().toString();
+
+			deepEqual(await _OLSKCacheResultFetchRenew({
+				ParamCallback: (function () {
+					return item;
+				}),
+			}), item);
 		});
 
-		await (new Promise(function (res, rej) {
-			return setTimeout(res, 5);
-		}));
+		it('assigns result to key', async function () {
+			const ParamMap = {};
 
-		deepEqual(item.charlie, true);
-	});
-	
-	it('calls param5 on renewal', async function() {
-		let item = {
-			charlie: [],
-			delta: [],
-		};
+			const ParamKey = Math.random().toString();
 
-		await mainModule.OLSKCacheResultFetchRenew(item, 'alfa', function () {
-			item.charlie.push(null);
+			await _OLSKCacheResultFetchRenew({
+				ParamMap,
+				ParamKey,
+				ParamCallback: (function () {
+					return ParamKey;
+				}),
+			});
 
-			return 'bravo';
-		}, 3, function (timerID) {
-			item.delta.push(null);
-
-			if (item.delta.length == 3) {
-				return clearInterval(timerID);
-			}
+			deepEqual(ParamMap, {
+				[ParamKey]: ParamKey,
+			});
 		});
 
-		await (new Promise(function (res, rej) {
-			return setTimeout(res, 15);
-		}));
+		it('calls _ParamTimerFunction', async function() {
+			const ParamMap = {};
+			const ParamKey = Math.random().toString();
+			const _ParamTimerFunction = Math.random().toString();
 
-		deepEqual(item.charlie, item.delta);
-	});
-	
-	it('passes timerID to param5', async function() {
-		let item = {
-			alfa: [],
-		};
+			await _OLSKCacheResultFetchRenew({
+				ParamMap,
+				ParamKey,
+				ParamCallback: (function () {
+					return Math.random().toString();
+				}),
+				_ParamTimerFunction: (function () {
+					ParamMap[ParamKey] = _ParamTimerFunction;
+				}),
+			});
 
-		await mainModule.OLSKCacheResultFetchRenew(item, 'bravo', function () {
-			return item.alfa.push(null);
-		}, 3, function (timerID) {
-			if (item.alfa.length >= 3) {
-				return clearInterval(timerID);
-			}
+			await (new Promise(function (res, rej) {
+				return setTimeout(res, 5);
+			}));
+
+			deepEqual(ParamMap, {
+				[ParamKey]: _ParamTimerFunction,
+			});
 		});
 
-		await (new Promise(function (res, rej) {
-			return setTimeout(res, 15);
-		}));
+	});
+
+	context('existing', function () {
 		
-		deepEqual(item.alfa.length, 3);
+		it('returns value', async function() {
+			const ParamKey = Math.random().toString();
+
+			deepEqual(await _OLSKCacheResultFetchRenew({
+				ParamMap: {
+					ParamKey,
+				},
+				ParamKey: 'ParamKey',
+			}), ParamKey);
+		});
+
+		it('skips ParamCallback', async function() {
+			const item = [];
+
+			const ParamKey = Math.random().toString();
+
+			await _OLSKCacheResultFetchRenew({
+				ParamMap: {
+					ParamKey,
+				},
+				ParamKey: 'ParamKey',
+				ParamCallback: (function () {
+					item.push(null);
+				}),
+			})
+
+			deepEqual(item, []);
+		});
+		
+		it('renews callback result after ParamInterval', async function() {
+			const ParamKey = Math.random().toString();
+			const ParamMap = {
+				ParamKey,
+			};
+			const result = Math.random().toString();
+
+			await _OLSKCacheResultFetchRenew({
+				ParamMap,
+				ParamKey: 'ParamKey',
+				ParamCallback: (function () {
+					return result;
+				}),
+			})
+
+			deepEqual(ParamMap, {
+				ParamKey
+			});
+
+			await (new Promise(function (res, rej) {
+				return setTimeout(res, 5);
+			}));
+			
+			deepEqual(ParamMap, {
+				ParamKey: result,
+			});
+		});
+
+		it('calls _ParamTimerFunction', async function() {
+			const ParamKey = Math.random().toString();
+			const ParamMap = {
+				[ParamKey]: ParamKey,
+			};
+			const _ParamTimerFunction = Math.random().toString();
+
+			await _OLSKCacheResultFetchRenew({
+				ParamMap,
+				ParamKey,
+				ParamCallback: (function () {
+					return Math.random().toString();
+				}),
+				_ParamTimerFunction: (function () {
+					ParamMap[ParamKey] = _ParamTimerFunction;
+				}),
+			})
+
+			deepEqual(ParamMap, {
+				[ParamKey]: ParamKey,
+			});
+
+			await (new Promise(function (res, rej) {
+				return setTimeout(res, 5);
+			}));
+			
+			deepEqual(ParamMap, {
+				[ParamKey]: _ParamTimerFunction,
+			});
+		});
+	
+	});
+
+	context('_ParamTimerFunction', function () {
+
+		it('passes timerID', async function() {
+			const ParamKey = Math.random().toString();
+			const ParamMap = {
+				[ParamKey]: 0,
+			};
+
+			await _OLSKCacheResultFetchRenew({
+				ParamMap,
+				ParamKey,
+				ParamCallback: (function () {
+					return ParamMap[ParamKey] + 1;
+				}),
+				_ParamTimerFunction: (function (timerID) {
+					if (ParamMap[ParamKey] >= 3) {
+						return clearInterval(timerID);
+					}
+				}),
+			});
+
+			await (new Promise(function (res, rej) {
+				return setTimeout(res, 15);
+			}));
+			
+			deepEqual(ParamMap[ParamKey], 3);
+		});
+	
 	});
 
 });
