@@ -55,7 +55,7 @@ const mod = {
 			param1[param2] = await param3();
 		}
 
-		return Promise.resolve(param1[param2]);
+		return param1[param2];
 	},
 
 	OLSKCacheResultFetchOnceSync (param1, param2, param3) {
@@ -103,7 +103,7 @@ const mod = {
 			}, param4);
 		}
 
-		return Promise.resolve(param1[param2]);
+		return param1[param2];
 	},
 
 	async OLSKCacheResultFetchRenew (param1, param2, param3, param4, param5 = function () {}) {
@@ -139,7 +139,7 @@ const mod = {
 			}, param4);
 		}
 
-		return Promise.resolve(param1[param2]);
+		return param1[param2];
 	},
 
 	OLSKCacheResultFetchInterval(param1, param2, param3, param4) {
