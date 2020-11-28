@@ -265,7 +265,7 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 			ParamKey: Math.random().toString(),
 			ParamCallback: (function () {}),
 			ParamInterval: 1,
-			_ParamTimerFunction: clearInterval,
+			_ParamCallbackDidFinish: clearInterval,
 		}, inputData));
 	};
 
@@ -327,10 +327,10 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 			});
 		});
 
-		it('calls _ParamTimerFunction', async function() {
+		it('calls _ParamCallbackDidFinish', async function() {
 			const ParamMap = {};
 			const ParamKey = Math.random().toString();
-			const _ParamTimerFunction = Math.random().toString();
+			const _ParamCallbackDidFinish = Math.random().toString();
 
 			await _OLSKCacheResultFetchRenew({
 				ParamMap,
@@ -338,8 +338,8 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 				ParamCallback: (function () {
 					return Math.random().toString();
 				}),
-				_ParamTimerFunction: (function () {
-					ParamMap[ParamKey] = _ParamTimerFunction;
+				_ParamCallbackDidFinish: (function () {
+					ParamMap[ParamKey] = _ParamCallbackDidFinish;
 				}),
 			});
 
@@ -348,7 +348,7 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 			}));
 
 			deepEqual(ParamMap, {
-				[ParamKey]: _ParamTimerFunction,
+				[ParamKey]: _ParamCallbackDidFinish,
 			});
 		});
 
@@ -413,12 +413,12 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 			});
 		});
 
-		it('calls _ParamTimerFunction', async function() {
+		it('calls _ParamCallbackDidFinish', async function() {
 			const ParamKey = Math.random().toString();
 			const ParamMap = {
 				[ParamKey]: ParamKey,
 			};
-			const _ParamTimerFunction = Math.random().toString();
+			const _ParamCallbackDidFinish = Math.random().toString();
 
 			await _OLSKCacheResultFetchRenew({
 				ParamMap,
@@ -426,8 +426,8 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 				ParamCallback: (function () {
 					return Math.random().toString();
 				}),
-				_ParamTimerFunction: (function () {
-					ParamMap[ParamKey] = _ParamTimerFunction;
+				_ParamCallbackDidFinish: (function () {
+					ParamMap[ParamKey] = _ParamCallbackDidFinish;
 				}),
 			})
 
@@ -440,13 +440,13 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 			}));
 			
 			deepEqual(ParamMap, {
-				[ParamKey]: _ParamTimerFunction,
+				[ParamKey]: _ParamCallbackDidFinish,
 			});
 		});
 	
 	});
 
-	context('_ParamTimerFunction', function () {
+	context('_ParamCallbackDidFinish', function () {
 
 		it('passes timerID', async function() {
 			const ParamKey = Math.random().toString();
@@ -460,7 +460,7 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 				ParamCallback: (function () {
 					return ParamMap[ParamKey] + 1;
 				}),
-				_ParamTimerFunction: (function (timerID) {
+				_ParamCallbackDidFinish: (function (timerID) {
 					if (ParamMap[ParamKey] >= 3) {
 						return clearInterval(timerID);
 					}

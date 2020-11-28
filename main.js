@@ -132,7 +132,7 @@ const mod = {
 		const callback = async function () {
 			params.ParamMap[params.ParamKey] = await params.ParamCallback();
 
-			return params._ParamTimerFunction(timerID);
+			return params._ParamCallbackDidFinish(timerID);
 		};
 
 		if (!params.ParamMap[params.ParamKey]) {
