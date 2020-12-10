@@ -1,6 +1,6 @@
 const { throws, rejects, deepEqual } = require('assert');
 
-const mainModule = require('./main.js');
+const mod = require('./main.js');
 
 const kTesting = {
 	StubRootDirectory: function () {
@@ -21,32 +21,32 @@ describe('OLSKCacheWriteFile', function test_OLSKCacheWriteFile() {
 
 	it('throws if param1 not object', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(null, 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mod.OLSKCacheWriteFile(null, 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), null, require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+			mod.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), null, require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param3 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', null);
+			mod.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('writes data', function() {
 		const item = require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory());
 		
-		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', item);
+		mod.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', item);
 
 		deepEqual(require('OLSKDisk').OLSKDiskReadFile(require('path').join(item, 'alfa.json')), JSON.stringify(kTesting.StubCacheObjectValid(), null, '\t'));
 	});
 
 	it('returns param1', function() {
-		deepEqual(mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), kTesting.StubCacheObjectValid());
+		deepEqual(mod.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), kTesting.StubCacheObjectValid());
 	});
 
 });
@@ -59,23 +59,23 @@ describe('OLSKCacheReadFile', function test_OLSKCacheReadFile() {
 
 	it('throws if param1 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheReadFile(null, kTesting.StubRootDirectory());
+			mod.OLSKCacheReadFile(null, kTesting.StubRootDirectory());
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKCacheReadFile('alfa', null);
+			mod.OLSKCacheReadFile('alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null', function() {
-		deepEqual(mainModule.OLSKCacheReadFile('alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), null);
+		deepEqual(mod.OLSKCacheReadFile('alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory())), null);
 	});
 
 	it('returns cacheObject if exists', function() {
-		mainModule.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
-		deepEqual(mainModule.OLSKCacheReadFile('alfa', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
+		mod.OLSKCacheWriteFile(kTesting.StubCacheObjectValid(), 'alfa', require('OLSKDisk').OLSKDiskCreateFolder(kTesting.StubRootDirectory()));
+		deepEqual(mod.OLSKCacheReadFile('alfa', kTesting.StubRootDirectory()), kTesting.StubCacheObjectValid());
 	});
 
 });
@@ -83,25 +83,25 @@ describe('OLSKCacheReadFile', function test_OLSKCacheReadFile() {
 describe('OLSKCacheResultFetchOnce', function test_OLSKCacheResultFetchOnce() {
 
 	it('rejects if param1 not object', function() {
-		return rejects(mainModule.OLSKCacheResultFetchOnce(null, 'alfa', function () {}));
+		return rejects(mod.OLSKCacheResultFetchOnce(null, 'alfa', function () {}));
 	});
 	
 	it('rejects if param2 not string', function() {
-		return rejects(mainModule.OLSKCacheResultFetchOnce({}, null, function () {}));
+		return rejects(mod.OLSKCacheResultFetchOnce({}, null, function () {}));
 	});
 	
 	it('rejects if param3 not function', function() {
-		return rejects(mainModule.OLSKCacheResultFetchOnce({}, 'alfa', null));
+		return rejects(mod.OLSKCacheResultFetchOnce({}, 'alfa', null));
 	});
 	
 	it('returns value if exists', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchOnce({
+		deepEqual(await mod.OLSKCacheResultFetchOnce({
 			alfa: 'bravo',
 		}, 'alfa', function () {}), 'bravo');
 	});
 	
 	it('returns callback result', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchOnce({}, 'alfa', function () {
+		deepEqual(await mod.OLSKCacheResultFetchOnce({}, 'alfa', function () {
 			return Promise.resolve('bravo');
 		}), 'bravo');
 	});
@@ -110,10 +110,10 @@ describe('OLSKCacheResultFetchOnce', function test_OLSKCacheResultFetchOnce() {
 		let item = {
 			alfa: [],
 		};
-		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchOnce(item, 'bravo', function () {
 			return item.alfa.push('charlie');
 		});
-		await mainModule.OLSKCacheResultFetchOnce(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchOnce(item, 'bravo', function () {
 			return item.alfa.push('delta');
 
 			return Promise.resolve('charlie');
@@ -127,30 +127,30 @@ describe('OLSKCacheResultFetchOnceSync', function test_OLSKCacheResultFetchOnceS
 
 	it('throws if param1 not object', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchOnceSync(null, 'alfa', function () {});
+			mod.OLSKCacheResultFetchOnceSync(null, 'alfa', function () {});
 		}, /ErrorInputNotValid/);
 	});
 	
 	it('throws if param2 not string', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchOnceSync({}, null, function () {});
+			mod.OLSKCacheResultFetchOnceSync({}, null, function () {});
 		}, /ErrorInputNotValid/);
 	});
 	
 	it('throws if param3 not function', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchOnceSync({}, 'alfa', null);
+			mod.OLSKCacheResultFetchOnceSync({}, 'alfa', null);
 		}, /ErrorInputNotValid/);
 	});
 	
 	it('returns value if exists', function() {
-		deepEqual(mainModule.OLSKCacheResultFetchOnceSync({
+		deepEqual(mod.OLSKCacheResultFetchOnceSync({
 			alfa: 'bravo',
 		}, 'alfa', function () {}), 'bravo');
 	});
 	
 	it('returns callback result', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchOnceSync({}, 'alfa', function () {
+		deepEqual(await mod.OLSKCacheResultFetchOnceSync({}, 'alfa', function () {
 			return Promise.resolve('bravo');
 		}), 'bravo');
 	});
@@ -159,10 +159,10 @@ describe('OLSKCacheResultFetchOnceSync', function test_OLSKCacheResultFetchOnceS
 		let item = {
 			alfa: [],
 		};
-		await mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
 			return item.alfa.push('charlie');
 		});
-		await mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
 			return item.alfa.push('delta');
 
 			return Promise.resolve('charlie');
@@ -174,10 +174,10 @@ describe('OLSKCacheResultFetchOnceSync', function test_OLSKCacheResultFetchOnceS
 		let item = {
 			alfa: [],
 		};
-		mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+		mod.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
 			return item.alfa.push('charlie');
 		});
-		await mainModule.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchOnceSync(item, 'bravo', function () {
 			return item.alfa.push('delta');
 		});
 		deepEqual(item.alfa, ['charlie']);
@@ -188,29 +188,29 @@ describe('OLSKCacheResultFetchOnceSync', function test_OLSKCacheResultFetchOnceS
 describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire() {
 
 	it('rejects if param1 not object', function() {
-		return rejects(mainModule.OLSKCacheResultFetchExpire(null, 'alfa', function () {}, 1));
+		return rejects(mod.OLSKCacheResultFetchExpire(null, 'alfa', function () {}, 1));
 	});
 	
 	it('rejects if param2 not string', function() {
-		return rejects(mainModule.OLSKCacheResultFetchExpire({}, null, function () {}, 1));
+		return rejects(mod.OLSKCacheResultFetchExpire({}, null, function () {}, 1));
 	});
 	
 	it('rejects if param3 not function', function() {
-		return rejects(mainModule.OLSKCacheResultFetchExpire({}, 'alfa', null, 1));
+		return rejects(mod.OLSKCacheResultFetchExpire({}, 'alfa', null, 1));
 	});
 	
 	it('rejects if param4 not number', function() {
-		return rejects(mainModule.OLSKCacheResultFetchExpire({}, 'alfa', function () {}, null));
+		return rejects(mod.OLSKCacheResultFetchExpire({}, 'alfa', function () {}, null));
 	});
 	
 	it('returns value if exists', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchExpire({
+		deepEqual(await mod.OLSKCacheResultFetchExpire({
 			alfa: 'bravo',
 		}, 'alfa', function () {}, 1), 'bravo');
 	});
 	
 	it('returns callback result', async function() {
-		deepEqual(await mainModule.OLSKCacheResultFetchExpire({}, 'alfa', function () {
+		deepEqual(await mod.OLSKCacheResultFetchExpire({}, 'alfa', function () {
 			return Promise.resolve('bravo');
 		}, 1), 'bravo');
 	});
@@ -219,12 +219,12 @@ describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire(
 		let item = {
 			alfa: [],
 		};
-		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchExpire(item, 'bravo', function () {
 			item.alfa.push(null);
 
 			return Promise.resolve('charlie');
 		}, 1);
-		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchExpire(item, 'bravo', function () {
 			item.alfa.push(null);
 
 			return Promise.resolve('charlie');
@@ -236,7 +236,7 @@ describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire(
 		let item = {
 			alfa: [],
 		};
-		await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+		await mod.OLSKCacheResultFetchExpire(item, 'bravo', function () {
 			item.alfa.push(null);
 
 			return Promise.resolve('charlie');
@@ -244,7 +244,7 @@ describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire(
 
 		await (new Promise(function (res, rej) {
 			setTimeout(async function () {
-				return res(await mainModule.OLSKCacheResultFetchExpire(item, 'bravo', function () {
+				return res(await mod.OLSKCacheResultFetchExpire(item, 'bravo', function () {
 					item.alfa.push(null);
 
 					return Promise.resolve('charlie');
@@ -260,7 +260,7 @@ describe('OLSKCacheResultFetchExpire', function test_OLSKCacheResultFetchExpire(
 describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() {
 
 	const _OLSKCacheResultFetchRenew = function (inputData) {
-		return mainModule.OLSKCacheResultFetchRenew(Object.assign({
+		return mod.OLSKCacheResultFetchRenew(Object.assign({
 			ParamMap: {},
 			ParamKey: Math.random().toString(),
 			ParamCallback: (function () {}),
@@ -270,7 +270,7 @@ describe('OLSKCacheResultFetchRenew', function test_OLSKCacheResultFetchRenew() 
 	};
 
 	it('rejects if not object', function() {
-		return rejects(mainModule.OLSKCacheResultFetchRenew(null));
+		return rejects(mod.OLSKCacheResultFetchRenew(null));
 	});
 
 	it('rejects if ParamMap not object', function() {
@@ -482,36 +482,36 @@ describe('OLSKCacheResultFetchInterval', function test_OLSKCacheResultFetchInter
 
 	it('throws if param1 not object', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchInterval(null, 'alfa', function () {}, 1);
+			mod.OLSKCacheResultFetchInterval(null, 'alfa', function () {}, 1);
 		}, /OLSKErrorInputNotValid/);
 	});
 	
 	it('throws if param2 not string', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchInterval({}, null, function () {}, 1);
+			mod.OLSKCacheResultFetchInterval({}, null, function () {}, 1);
 		}, /OLSKErrorInputNotValid/);
 	});
 	
 	it('throws if param3 not function', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchInterval({}, 'alfa', null, 1);
+			mod.OLSKCacheResultFetchInterval({}, 'alfa', null, 1);
 		}, /OLSKErrorInputNotValid/);
 	});
 	
 	it('throws if param4 not number', function() {
 		throws(function () {
-			mainModule.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, null);
+			mod.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns timerID', function() {
-		deepEqual(mainModule.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, 1).constructor.name, 'Timeout');
+		deepEqual(mod.OLSKCacheResultFetchInterval({}, 'alfa', function () {}, 1).constructor.name, 'Timeout');
 	});
 	
 	it('updates result before interval', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
+		mod.OLSKCacheResultFetchInterval(item, 'alfa', function () {
 			return [item.alfa];
 		}, 10);
 
@@ -525,7 +525,7 @@ describe('OLSKCacheResultFetchInterval', function test_OLSKCacheResultFetchInter
 	it('updates result after interval once', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
+		mod.OLSKCacheResultFetchInterval(item, 'alfa', function () {
 			return [item.alfa];
 		}, 10);
 
@@ -539,7 +539,7 @@ describe('OLSKCacheResultFetchInterval', function test_OLSKCacheResultFetchInter
 	it('updates result after interval once', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheResultFetchInterval(item, 'alfa', function () {
+		mod.OLSKCacheResultFetchInterval(item, 'alfa', function () {
 			return [item.alfa];
 		}, 10);
 
@@ -556,24 +556,24 @@ describe('OLSKCacheExpiringMapEntry', function test_OLSKCacheExpiringMapEntry() 
 
 	it('throws error if param1 not object', function() {
 		throws(function() {
-			mainModule.OLSKCacheExpiringMapEntry(null, null, null, 1);
+			mod.OLSKCacheExpiringMapEntry(null, null, null, 1);
 		}, /RCSErrorInputNotValid/);
 	});
 	
 	it('throws error if param4 not number', function() {
 		throws(function() {
-			mainModule.OLSKCacheExpiringMapEntry({}, null, null, null);
+			mod.OLSKCacheExpiringMapEntry({}, null, null, null);
 		}, /RCSErrorInputNotValid/);
 	});
 	
 	it('returns param2', function() {
-		deepEqual(mainModule.OLSKCacheExpiringMapEntry({}, 'alfa', null, 0), 'alfa');
+		deepEqual(mod.OLSKCacheExpiringMapEntry({}, 'alfa', null, 0), 'alfa');
 	});
 	
 	it('sets param2', function() {
 		let item = {};
 
-		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
+		mod.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
 
 		deepEqual(item, {
 			alfa: 'bravo',
@@ -583,7 +583,7 @@ describe('OLSKCacheExpiringMapEntry', function test_OLSKCacheExpiringMapEntry() 
 	it('keeps param2 until duration', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
+		mod.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
 
 		setTimeout(function () {
 			deepEqual(item, {
@@ -597,7 +597,7 @@ describe('OLSKCacheExpiringMapEntry', function test_OLSKCacheExpiringMapEntry() 
 	it('deletes param2 after duration', function(done) {
 		let item = {};
 
-		mainModule.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
+		mod.OLSKCacheExpiringMapEntry(item, 'alfa', 'bravo', 10);
 
 		setTimeout(function () {
 			deepEqual(item, {});
