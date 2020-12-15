@@ -1,6 +1,7 @@
 {
   "name": "OLSKCache",
   "main": "main.js",
+  "version": "0.0.0",
   "devDependencies": {
     "OLSKDisk": "olsk/OLSKDisk"
   }
