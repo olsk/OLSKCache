@@ -214,6 +214,14 @@ const mod = {
 		return mod.OLSKCacheURLBasename(inputData) + extension;
 	},
 
+	OLSKCachePath (inputData) {
+		if (typeof inputData !== 'string') {
+			throw new Error('OLSKErrorInputNotValid');
+		}
+
+		return require('path').join(...[inputData, '__cached'].concat([...arguments].slice(1)));
+	},
+
 };
 
 Object.assign(exports, mod);

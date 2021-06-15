@@ -652,3 +652,26 @@ describe('OLSKCacheURLFilename', function test_OLSKCacheURLFilename() {
 	});
 
 });
+
+describe('OLSKCachePath', function test_OLSKCachePath() {
+
+	it('throws if param1 not string', function () {
+		throws(function () {
+			mod.OLSKCachePath(null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns string', function () {
+		const item = Math.random().toString();
+		deepEqual(mod.OLSKCachePath(item), require('path').join(item, '__cached'));
+	});
+
+	it('concatenates other arguments', function () {
+		const root = Math.random().toString();
+		const items = Array.from(Array(uRandomInt(5))).map(function () {
+			return Math.random().toString();
+		});
+		deepEqual(mod.OLSKCachePath(...[root].concat(items)), require('path').join(...[root, '__cached'].concat(items)));
+	});
+
+});
