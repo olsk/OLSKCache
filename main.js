@@ -196,7 +196,7 @@ const mod = {
 
 	OLSKCacheURLBasename (inputData) {
 		if (typeof inputData !== 'string') {
-			throw new Error('EASErrorInputNotValid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		const host = (new URL('', inputData)).host.replace('www.', '');
@@ -206,7 +206,7 @@ const mod = {
 
 	OLSKCacheURLFilename (inputData) {
 		if (typeof inputData !== 'string') {
-			throw new Error('EASErrorInputNotValid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		const extension = require('path').extname(inputData).split('?').shift();

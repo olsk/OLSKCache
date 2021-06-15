@@ -613,7 +613,7 @@ describe('OLSKCacheURLBasename', function test_OLSKCacheURLBasename() {
 	it('throws if not string', function () {
 		throws(function () {
 			mod.OLSKCacheURLBasename(null);
-		}, /EASErrorInputNotValid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns string', function () {
@@ -631,7 +631,7 @@ describe('OLSKCacheURLFilename', function test_OLSKCacheURLFilename() {
 	it('throws if not string', function () {
 		throws(function () {
 			mod.OLSKCacheURLFilename(null);
-		}, /EASErrorInputNotValid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns string', function () {
@@ -652,4 +652,3 @@ describe('OLSKCacheURLFilename', function test_OLSKCacheURLFilename() {
 	});
 
 });
-
