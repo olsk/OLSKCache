@@ -625,3 +625,31 @@ describe('OLSKCacheURLBasename', function test_OLSKCacheURLBasename() {
 	});
 
 });
+
+describe('OLSKCacheURLFilename', function test_OLSKCacheURLFilename() {
+
+	it('throws if not string', function () {
+		throws(function () {
+			mod.OLSKCacheURLFilename(null);
+		}, /EASErrorInputNotValid/);
+	});
+
+	it('returns string', function () {
+		const extension = '.' + uRandomElement('png', 'jpg', 'gif');
+		const filename = Date.now().toString();
+		const item = uLink(filename + extension);
+
+		deepEqual(mod.OLSKCacheURLFilename(item), mod.OLSKCacheURLBasename(item).replace('.html', '') + extension);
+	});
+
+	it('strips query', function () {
+		const extension = '.' + uRandomElement('png', 'jpg', 'gif');
+		const filename = Date.now().toString();
+		const item = uLink(filename + extension);
+		const query = '?' + Date.now().toString();
+
+		deepEqual(mod.OLSKCacheURLFilename(item + query), mod.OLSKCacheURLBasename(item + query).replace('.html', '') + extension);
+	});
+
+});
+

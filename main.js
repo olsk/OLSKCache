@@ -204,6 +204,16 @@ const mod = {
 		return host + '.' + mod._OLSKCacheStringHash(inputData);
 	},
 
+	OLSKCacheURLFilename (inputData) {
+		if (typeof inputData !== 'string') {
+			throw new Error('EASErrorInputNotValid');
+		}
+
+		const extension = require('path').extname(inputData).split('?').shift();
+
+		return mod.OLSKCacheURLBasename(inputData) + extension;
+	},
+
 };
 
 Object.assign(exports, mod);
