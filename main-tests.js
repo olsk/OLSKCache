@@ -607,3 +607,21 @@ describe('OLSKCacheExpiringMapEntry', function test_OLSKCacheExpiringMapEntry() 
 	});
 
 });
+
+describe('OLSKCacheURLBasename', function test_OLSKCacheURLBasename() {
+
+	it('throws if not string', function () {
+		throws(function () {
+			mod.OLSKCacheURLBasename(null);
+		}, /EASErrorInputNotValid/);
+	});
+
+	it('returns string', function () {
+		const host = uRandomElement('www.example.com', 'www.alfa.bravo');
+		const filename = Date.now().toString();
+		const item = 'https://' + host + '/' + filename;
+
+		deepEqual(mod.OLSKCacheURLBasename(item), host.replace('www.', '') + '.' + mod._OLSKCacheStringHash(item));
+	});
+
+});

@@ -190,6 +190,20 @@ const mod = {
 		return param2;
 	},
 
+	_OLSKCacheStringHash (inputData) {
+		return require('crypto').createHash('md5').update(inputData).digest('hex');
+	},
+
+	OLSKCacheURLBasename (inputData) {
+		if (typeof inputData !== 'string') {
+			throw new Error('EASErrorInputNotValid');
+		}
+
+		const host = (new URL('', inputData)).host.replace('www.', '');
+
+		return host + '.' + mod._OLSKCacheStringHash(inputData);
+	},
+
 };
 
 Object.assign(exports, mod);
