@@ -209,7 +209,8 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		const extension = require('path').extname(inputData).split('?').shift();
+		const _require = require;
+		const extension = _require('path').extname(inputData).split('?').shift();
 
 		return mod.OLSKCacheURLBasename(inputData) + extension;
 	},
@@ -219,7 +220,8 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return require('path').join(...[inputData, '__cached'].concat([...arguments].slice(1)));
+		const _require = require;
+		return _require('path').join(...[inputData, '__cached'].concat([...arguments].slice(1)));
 	},
 
 };
