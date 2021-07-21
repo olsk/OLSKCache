@@ -146,32 +146,6 @@ const mod = {
 		return params.ParamMap[params.ParamKey];
 	},
 
-	OLSKCacheResultFetchInterval(param1, param2, param3, param4) {
-		if (typeof param1 !== 'object' || param1 === null) {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param2 !== 'string') {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param3 !== 'function') {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param4 !== 'number') {
-			throw new Error('OLSKErrorInputNotValid');
-		}
-
-		const callback = async function () {
-			return param1[param2] = await param3();
-		};
-
-		callback();
-
-		return setInterval(callback, param4);
-	},
-
 	OLSKCacheExpiringMapEntry(param1, param2, param3, param4) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('RCSErrorInputNotValid');
