@@ -78,34 +78,6 @@ const mod = {
 		return param1[param2];
 	},
 
-	async OLSKCacheResultFetchExpire (param1, param2, param3, param4) {
-		if (typeof param1 !== 'object' || param1 === null) {
-			return Promise.reject('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param2 !== 'string') {
-			return Promise.reject('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param3 !== 'function') {
-			return Promise.reject('OLSKErrorInputNotValid');
-		}
-
-		if (typeof param4 !== 'number') {
-			throw new Error('RCSErrorInputNotValid');
-		}
-
-		if (!param1[param2]) {
-			param1[param2] = await param3();
-
-			setTimeout(function () {
-				delete param1[param2];
-			}, param4);
-		}
-
-		return param1[param2];
-	},
-
 	async OLSKCacheResultFetchRenew (params) {
 		if (typeof params !== 'object' || params === null) {
 			return Promise.reject('OLSKErrorInputNotValid');
