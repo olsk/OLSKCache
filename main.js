@@ -137,7 +137,8 @@ const mod = {
 	},
 
 	_OLSKCacheStringHash (inputData) {
-		return require('crypto').createHash('md5').update(inputData).digest('hex');
+		const _require = require;
+		return _require('crypto').createHash('md5').update(inputData).digest('hex');
 	},
 
 	OLSKCacheURLBasename (inputData) {
